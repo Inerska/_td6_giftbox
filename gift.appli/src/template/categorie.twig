@@ -1,0 +1,15 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <h2>Catégorie</h2>
+
+    <p>ID: {{ categorie.id }}</p>
+    <p>Libellé: {{ categorie.libelle }}</p>
+    <p>Description: {{ categorie.description }}</p>
+
+    <!-- Affichage des prestations liées à la catégorie -->
+    <a href="{{ url_for('prestations') }}?id={{ categorie.id }}">Voir les prestations</a>
+
+    <!-- Lien de retour à la liste des catégories -->
+    <a href="{{ url_for('categories') }}">Retour à la liste des catégories</a>
+{% endblock %}
