@@ -9,6 +9,7 @@ use gift\app\models\Box;
 use gift\app\services\IService;
 use gift\app\services\PrestationNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Ramsey\Uuid\Uuid;
 
 class BoxService implements IService
 {
@@ -60,6 +61,7 @@ class BoxService implements IService
         }
 
         $box = Box::create([
+            'id' => Uuid::uuid4()->toString(),
             'name' => $name,
             'description' => $description,
             'price' => $price,
