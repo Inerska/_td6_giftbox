@@ -55,7 +55,7 @@ class BoxService implements IService
 
         $box = Box::create([
             'id' => Uuid::uuid4()->toString(),
-            'token' => base64_encode($name),
+            'token' => base64_encode($name.$description),
             'libelle' => $name,
             'description' => $description,
             'montant' => $montant,
