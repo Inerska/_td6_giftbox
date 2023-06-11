@@ -19,11 +19,14 @@ class CategoriesCreationAction extends Action
      * @throws SyntaxError
      * @throws RuntimeError
      * @throws LoaderError
+     * @throws Exception
      */
     public function __invoke(Request $request, Response $response, $args): Response
     {
         if ($request->getMethod() === 'GET') {
-            return Twig::fromRequest($request)->render($response, 'categorieCreationForm.twig');
+            return Twig::fromRequest($request)->render($response, 'categorieCreationForm.twig', [
+                'token' => CsrfService::generateToken(),
+            ]);
         }
 
         $data = $request->getParsedBody();
