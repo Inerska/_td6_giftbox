@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace gift\app\actions;
 
 use Exception;
+use gift\app\services\PrestationsService;
 use gift\app\services\utils\CsrfService;
+use gift\test\services\prestations\PrestationServiceTest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
@@ -31,17 +33,18 @@ class CategoriesCreationAction extends Action
 
         $data = $request->getParsedBody();
 
-        $token = $data['csrf_token'] ?? '';
+        $token = $data['token'] ?? '';
 
-        try {
-            CsrfService::checkToken($token);
-        } catch (Exception $e) {
+        CsrfService::checkToken($token);
+
+        $result = PrestationsService::createCategory($data);
+
+        if (!$result) {
+            throw new Exception('Failed to create category');
         }
 
-        return Twig::fromRequest($request)
-            ->render($response, 'categorieCreationHandled.twig', [
-                'libelle' => $data["libelle"],
-                'description' => $data["description"],
-            ]);
+        return $response
+            ->withStatus(302)
+            ->withHeader('Location', '/categories');
     }
 }

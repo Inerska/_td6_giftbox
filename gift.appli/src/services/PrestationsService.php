@@ -35,7 +35,7 @@ class PrestationsService
     /**
      * @throws Exception if data is invalid
      */
-    public static function createCategory(array $data): array
+    public static function createCategory(array $data): bool
     {
         if (!isset($data['libelle']) || !isset($data['description'])) {
             throw new Exception('Invalid data: libelle or description not provided');
@@ -54,7 +54,7 @@ class PrestationsService
             'description' => $description
         ]);
 
-        return $category->toArray();
+        return $category->save();
     }
 
 }
