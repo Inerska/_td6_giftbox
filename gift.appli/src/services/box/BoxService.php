@@ -11,8 +11,20 @@ use gift\app\services\PrestationNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
 
-class BoxService implements IService
+class BoxService
 {
+    static function addService(int $serviceId, string $boxId): bool
+    {
+        try {
+            $box = self::getById($boxId);
+            $box->prestations()->attach($serviceId);
+
+            return true;
+        } catch (PrestationNotFoundException $prestationNotFoundException) {
+            return false;
+        }
+    }
+
     static function getById(string $id): array
     {
         try {
@@ -23,14 +35,9 @@ class BoxService implements IService
         }
     }
 
-    static function addSub(array $data): bool
+    static function removeService(array $data): bool
     {
-        // TODO: Implement addSub() method.
-    }
-
-    static function removeSub(array $data): bool
-    {
-        // TODO: Implement removeSub() method.
+        throw new Exception('Not implemented');
     }
 
     /**
@@ -55,7 +62,7 @@ class BoxService implements IService
 
         $box = Box::create([
             'id' => Uuid::uuid4()->toString(),
-            'token' => base64_encode($name.$description),
+            'token' => base64_encode($name . $description),
             'libelle' => $name,
             'description' => $description,
             'montant' => $montant,
