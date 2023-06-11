@@ -1,9 +1,9 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h2>Catégories</h2>
+  <h2 class="text-xl font-bold">Catégories</h2>
 
-  <table>
+  <table class="table-auto">
     <tr>
       <th>ID</th>
       <th>Libellé</th>
@@ -18,6 +18,6 @@
     {% endfor %}
   </table>
 
-  <a href="{{ url_for('accueil') }}">Accueil</a>
+  <a href="{{ url_for('accueil') }}" class="bg-blue-500 mt-2 p-2 text-white font-semibiold">Accueil</a>
 
 {% endblock %}
