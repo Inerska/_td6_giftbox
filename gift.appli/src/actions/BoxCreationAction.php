@@ -13,6 +13,8 @@ class BoxCreationAction extends Action
 
     public function __invoke(ServerRequestInterface $request, Response $response, $args):Response
     {
+
+
         return Twig::fromRequest($request)->render($response, 'boxCreationForm.twig');
     }
 }

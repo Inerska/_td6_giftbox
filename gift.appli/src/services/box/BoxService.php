@@ -39,34 +39,27 @@ class BoxService implements IService
     static function create(array $data): bool
     {
         if (!isset($data['name'])
-            || !isset($data['description'])
-            || !isset($data['price'])
-            || !isset($data['image'])
-            || !isset($data['category_id'])) {
-            throw new Exception('Invalid data: name or description or price or image or category_id not provided');
+            || !isset($data['description'])) {
+            throw new Exception('Invalid data: name or description or montant or image or category_id not provided');
         }
 
         $name = htmlspecialchars($data['name']);
         $description = htmlspecialchars($data['description']);
-        $price = htmlspecialchars($data['price']);
-        $image = htmlspecialchars($data['image']);
-        $category_id = htmlspecialchars($data['category_id']);
+        $montant = $data['montant'] ?? 0;
+        $statut = $data['statut'] ?? Box::CREATED;
 
         if ($name !== $data['name']
-            || $description !== $data['description']
-            || $price !== $data['price']
-            || $image !== $data['image']
-            || $category_id !== $data['category_id']) {
-            throw new Exception('Invalid data: name or description or price or image or category_id contains invalid characters');
+            || $description !== $data['description']) {
+            throw new Exception('Invalid data: name or description or montant or statut or category_id contains invalid characters');
         }
 
         $box = Box::create([
             'id' => Uuid::uuid4()->toString(),
-            'name' => $name,
+            'token' => base64_encode($name),
+            'libelle' => $name,
             'description' => $description,
-            'price' => $price,
-            'image' => $image,
-            'category_id' => $category_id
+            'montant' => $montant,
+            'statut' => $statut,
         ]);
 
         return $box->save();
