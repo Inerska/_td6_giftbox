@@ -6,7 +6,6 @@ namespace gift\app\services\box;
 
 use Exception;
 use gift\app\models\Box;
-use gift\app\services\IService;
 use gift\app\services\PrestationNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;

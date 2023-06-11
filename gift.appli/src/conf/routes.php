@@ -3,6 +3,7 @@
 namespace gift\app\conf;
 
 use gift\app\actions\AccueilAction;
+use gift\app\actions\BoxAppendServiceToAction;
 use gift\app\actions\BoxCreationAction;
 use gift\app\actions\BoxCreationHandlerAction;
 use gift\app\actions\CategoriesAction;
@@ -29,5 +30,7 @@ return function ($app) {
     $app->get('/boxes/new', BoxCreationAction::class)->setName('box_creation');
 
     $app->post('/boxes/new', BoxCreationHandlerAction::class)->setName('box_creation_handler');
+
+    $app->post('/boxes/{id}/services', BoxAppendServiceToAction::class)->setName('box_append_service_to');
 
 };
