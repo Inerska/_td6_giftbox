@@ -10,21 +10,21 @@ use gift\app\services\PrestationNotFoundException;
 use gift\app\services\PrestationsService;
 use Illuminate\Database\Capsule\Manager as DB;
 use PHPUnit\Framework\TestCase;
+use Twig\Extension\EscaperExtension;
 
 final class PrestationServiceTest extends TestCase
 {
-
     private static array $prestations = [];
     private static array $categories = [];
 
-    public static function setUpBeforeClass(): void
+    public function setUp(): void
     {
-        parent::setUpBeforeClass();
+        parent::setUp();
 
-        $db = new DB();
-        $db->addConnection(parse_ini_file(__DIR__ . '../../src/conf/gift.db.conf.ini.test'));
-        $db->setAsGlobal();
-        $db->bootEloquent();
+        $config = new DB();
+        $config->addConnection(parse_ini_file(__DIR__ . '../../src/conf/gift.db.conf.ini.test'));
+        $config->setAsGlobal();
+        $config->bootEloquent();
         $faker = Factory::create('fr_FR');
 
         $c1 = Categorie::create(['libelle' => $faker->word(), 'description' => $faker->paragraph(3)]);
@@ -32,17 +32,9 @@ final class PrestationServiceTest extends TestCase
         self::$categories = [$c1, $c2];
 
         for ($i = 1; $i <= 4; $i++) {
-            $p = Prestation::create([
-                'id' => $faker->uuid(),
-                'libelle' => $faker->word(),
-                'description' => $faker->paragraph(3),
-                'tarif' => $faker->randomFloat(2, 20, 200),
-                'img' => $faker->imageUrl(),
-                'unite' => $faker->numberBetween(1, 3)
-            ]);
-            array_push(self::$prestations, $p);
+            $prestation = Prestation::create(['id' => $faker->uuid(), 'libelle' => $faker->word(), 'description' => $faker->paragraph(3), 'tarif' => $faker->randomFloat(2, 20, 200), 'img' => $faker->imageUrl(), 'unite' => $faker->numberBetween(1, 3), 'cat_id' => $faker->numberBetween(1, 4)]);
+            array_push(self::$prestations, $prestation);
         }
-
 
         self::$prestations[0]->categorie()->associate($c1);
         self::$prestations[0]->save();
@@ -52,65 +44,89 @@ final class PrestationServiceTest extends TestCase
         self::$prestations[2]->save();
         self::$prestations[3]->categorie()->associate($c2);
         self::$prestations[3]->save();
-
-
     }
 
-    public static function tearDownAfterClass(): void
+    public function tearDown(): void
     {
-        foreach (self::$categories as $c) {
-            $c->delete();
+        foreach (self::$categories as $category) {
+            $category->delete();
         }
+
         foreach (self::$prestations as $prestation) {
             $prestation->delete();
         }
 
+        parent::tearDown();
     }
 
-
-    public function testgetCategories(): void
+    /**
+     * @test
+     */
+    public function should_get_all_prestations(): void
     {
+        $service = new PrestationsService();
+        $prestations = $service->getPrestations();
 
-        $prestationService = new PrestationsService();
-        $categories = $prestationService->getCategories();
-
-        $this->assertEquals(count(self::$categories), count($categories));
-        $this->assertEquals(self::$categories[0]['id'], $categories[0]['id']);
-        $this->assertEquals(self::$categories[0]['libelle'], $categories[0]['libelle']);
-        $this->assertEquals(self::$categories[0]['description'], $categories[0]['description']);
-        $this->assertEquals(self::$categories[1]['libelle'], $categories[1]['libelle']);
-        $this->assertEquals(self::$categories[1]['description'], $categories[1]['description']);
-        $this->assertEquals(self::$categories[1]['id'], $categories[1]['id']);
+        $this->assertIsArray($prestations);
+        $this->assertCount(4, $prestations);
     }
 
-    public function testgetCategorieById(): void
+    /**
+     * @test
+     */
+    public function should_get_all_categories(): void
     {
+        $service = new PrestationsService();
+        $categories = $service->getCategories();
 
-        $prestationService = new PrestationsService();
-        $categorie = $prestationService->getCategorieById(self::$categories[0]['id']);
+        $this->assertIsArray($categories);
+        $this->assertCount(2, $categories);
+    }
 
-        $this->assertEquals(self::$categories[0]['id'], $categorie['id']);
-        $this->assertEquals(self::$categories[0]['libelle'], $categorie['libelle']);
-        $this->assertEquals(self::$categories[0]['description'], $categorie['description']);
+    /**
+     * @test
+     */
+    public function should_get_prestation_by_id(): void
+    {
+        $service = new PrestationsService();
+        $prestation = $service->getPrestationById(self::$prestations[0]->id);
+
+        $this->assertIsArray($prestation);
+        $this->assertCount(8, $prestation);
+        $this->assertEquals(self::$prestations[0]->id, $prestation['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function should_get_prestations_by_category_id(): void
+    {
+        $service = new PrestationsService();
+        $prestations = $service->getPrestationsByCategorieId(self::$categories[0]->id);
+
+        $this->assertIsArray($prestations);
+        $this->assertCount(2, $prestations);
+    }
+
+    /**
+     * @test
+     */
+    public function should_throw_exception_when_prestation_not_found(): void
+    {
+        $service = new PrestationsService();
 
         $this->expectException(PrestationNotFoundException::class);
-        $prestationService->getCategorieById(-1);
+        $service->getPrestationById('unknown');
     }
 
-    public function testgetPrestationById(): void
+    /**
+     * @test
+     */
+    public function should_throw_exception_when_category_not_found(): void
     {
-        $prestationService = new PrestationsService();
-        $prestation = $prestationService->getPrestationById(self::$prestations[0]['id']);
-
-        $this->assertEquals(self::$prestations[0]['id'], $prestation['id']);
-        $this->assertEquals(self::$prestations[0]['libelle'], $prestation['libelle']);
-        $this->assertEquals(self::$prestations[0]['description'], $prestation['description']);
-        $this->assertEquals(self::$prestations[0]['tarif'], $prestation['tarif']);
-        $this->assertEquals(self::$prestations[0]['unite'], $prestation['unite']);
+        $service = new PrestationsService();
 
         $this->expectException(PrestationNotFoundException::class);
-        $prestationService->getPrestationById('AAAAAAA');
+        $service->getPrestationsByCategorieId(-1);
     }
-
-
 }

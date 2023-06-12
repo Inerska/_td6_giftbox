@@ -12,35 +12,21 @@ class PrestationsService
     public static function getPrestationById(string $id): array
     {
         try {
-            return Prestation::findOrFail($id)
-                ->toArray();
-        } catch (ModelNotFoundException $e) {
+            return Prestation::findOrFail($id)->toArray();
+        } catch (ModelNotFoundException $modelNotFoundException) {
             throw new PrestationNotFoundException('Prestation inconnue: ' . $id);
         }
     }
 
-    public function getCategories(): array
+    public function getPrestations(): array
     {
-        return Categorie::all()->toArray();
+        return Prestation::all()->toArray();
     }
 
-    public function getCategorieById(int $id): array
+    public static function getPrestationsByCategorieId(int $categ_id): array
     {
         try {
-            return Categorie::findOrFail($id)
-                ->toArray();
-        } catch (ModelNotFoundException $e) {
-            throw new PrestationNotFoundException('Catégorie inconnue: ' . $id);
-        }
-    }
-
-    public static function getPrestationsByCategorie(int $categ_id): array
-    {
-        try {
-            return Categorie::findOrFail($categ_id)
-                ->prestations()
-                ->get()
-                ->toArray();
+            return Categorie::findOrFail($categ_id)->prestations()->get()->toArray();
 
         } catch (ModelNotFoundException $e) {
             throw new PrestationNotFoundException('Catégorie inconnue ou sans prestation: ' . $categ_id);
@@ -59,17 +45,36 @@ class PrestationsService
         $libelle = htmlspecialchars($data['libelle']);
         $description = htmlspecialchars($data['description']);
 
-        if ($libelle !== $data['libelle']
-            || $description !== $data['description']) {
+        if ($libelle !== $data['libelle'] || $description !== $data['description']) {
             throw new Exception('Invalid data: libelle or description contains invalid characters');
         }
 
-        $category = Categorie::create([
-            'libelle' => $libelle,
-            'description' => $description
-        ]);
+        $category = Categorie::create(['libelle' => $libelle, 'description' => $description]);
 
         return $category->save();
+    }
+
+    public function getCategories(): array
+    {
+        return Categorie::all()->toArray();
+    }
+
+    public function getCategorieById(int $id): array
+    {
+        try {
+            return Categorie::findOrFail($id)->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new PrestationNotFoundException('Catégorie inconnue: ' . $id);
+        }
+    }
+
+    public function getPrestationsByCategoryId(int $categ_id): array
+    {
+        try {
+            return Categorie::findOrFail($categ_id)->prestations()->get()->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new PrestationNotFoundException('Catégorie inconnue ou sans prestation: ' . $categ_id);
+        }
     }
 
 }
