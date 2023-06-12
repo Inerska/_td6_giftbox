@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace gift\api\models;
 
-use gift\app\models\Prestation;
+use gift\api\models\Prestation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Box extends Model
 {
-
     public const CREATED = 1;
     public const VALIDATED = 2;
     public const PAYED = 3;

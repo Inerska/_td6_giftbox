@@ -3,6 +3,7 @@
 namespace gift\api\conf;
 
 use gift\api\actions\FetchAllCategoriesAction;
+use gift\api\actions\FetchBoxByIdAction;
 
 
 return function ($app) {
@@ -12,4 +13,6 @@ return function ($app) {
     });
 
     $app->get('/api/categories', FetchAllCategoriesAction::class);
+
+    $app->get('/api/boxes/{id}', FetchBoxByIdAction::class);
 };
