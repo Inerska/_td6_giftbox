@@ -7,7 +7,7 @@
     <p>Libellé: {{ categorie.libelle }}</p>
     <p>Description: {{ categorie.description }}</p>
 
-    <a href="{{ url_for('prestations') }}?id={{ categorie.id }}">Voir les prestations</a>
+    <a href="{{ url_for('prestations', {'id': categorie.id}) }}">Voir les prestations</a>
 
     <a href="{{ url_for('categories') }}">Retour à la liste des catégories</a>
 {% endblock %}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace gift\app\conf;
 
 use gift\app\actions\AccueilAction;
@@ -23,9 +25,9 @@ return function ($app) {
 
     $app->map(['GET', 'POST'], '/categories/create', CategoriesCreationAction::class)->setName('category_creation');
 
-    $app->get('/prestations', PrestationsAction::class)->setName('prestations');
+    $app->get('/prestations/{id}', PrestationsAction::class)->setName('prestations');
 
-    $app->get('/prestation', PrestationAction::class)->setName('prestation');
+    $app->get('/prestation/{id}', PrestationAction::class)->setName('prestation');
 
     $app->get('/boxes/new', BoxCreationAction::class)->setName('box_creation');
 
