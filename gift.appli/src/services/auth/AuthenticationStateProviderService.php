@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace gift\app\services\auth;
 
 use gift\app\infrastructure\exceptions\auth\EmailAlreadyExistsException;
+use gift\app\infrastructure\exceptions\auth\EmailDoesNotExistException;
+use gift\app\infrastructure\exceptions\auth\InvalidPasswordException;
 use gift\app\models\Identity\IdentityUser;
 use gift\app\services\auth\repositories\IdentityUserRepository;
 use gift\app\services\IRepository;
@@ -52,6 +54,42 @@ class AuthenticationStateProviderService
         return $user;
     }
 
+    /**
+     * @throws EmailDoesNotExistException
+     * @throws InvalidPasswordException
+     */
+    public function signIn(string $email, string $password): bool
+    {
+        $userArray = $this->repository->first(fn(IdentityUser $user) => $user->email === $email);
+
+        if (!$userArray) {
+            throw new EmailDoesNotExistException('Email does not exist');
+        }
+
+        $user = $this->createUserFromData($userArray);
+
+        if (!password_verify($password, $user->password)) {
+            throw new InvalidPasswordException('Invalid password');
+        }
+
+        $_SESSION['user'] = $user;
+
+        return true;
+    }
+
+    private function createUserFromData(array $data): IdentityUser
+    {
+        $user = new IdentityUser();
+        $user->pseudo = $data['pseudo'];
+        $user->id = $data['id'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+
+        return $user;
+    }
+
+
+
     public function isAuthenticated(): bool
     {
         return isset($_SESSION['user']);
@@ -60,5 +98,10 @@ class AuthenticationStateProviderService
     public function signOut()
     {
         unset($_SESSION['user']);
+    }
+
+    public function user(): ?IdentityUser
+    {
+        return $_SESSION['user'] ?? null;
     }
 }

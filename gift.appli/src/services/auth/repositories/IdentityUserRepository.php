@@ -52,4 +52,14 @@ final class IdentityUserRepository implements IRepository
 
         return $users->filter($predicate)->isNotEmpty();
     }
+
+    public function first(callable $predicate): ?array
+    {
+        $users = IdentityUser::all();
+
+        return $users
+            ->filter($predicate)
+            ->first()
+            ->toArray();
+    }
 }

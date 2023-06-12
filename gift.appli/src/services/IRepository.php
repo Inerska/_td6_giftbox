@@ -17,4 +17,6 @@ interface IRepository
     public function delete(int $id): bool;
 
     public function any(callable $predicate): bool;
+
+    public function first(callable $predicate): ?array;
 }
