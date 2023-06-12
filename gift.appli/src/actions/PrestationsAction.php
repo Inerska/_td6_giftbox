@@ -15,13 +15,13 @@ final class PrestationsAction extends Action
 
     public function __invoke(Request $request, Response $response, $args): Response
     {
-        if (!isset($request->getQueryParams()['id'])) {
+        if (!isset($args['id'])) {
             throw new CategorieNotFoundException("L'id de la categorie n'est pas renseigné");
         }
 
         return Twig::fromRequest($request)->render($response, 'prestations.twig',
             ['prestations' => PrestationsService::getPrestationsByCategorieId(
-                $request->getQueryParams()['id']
+                intval($args['id'])
             )]
         );
     }

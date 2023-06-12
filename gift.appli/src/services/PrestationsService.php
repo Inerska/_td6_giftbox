@@ -18,11 +18,6 @@ class PrestationsService
         }
     }
 
-    public function getPrestations(): array
-    {
-        return Prestation::all()->toArray();
-    }
-
     public static function getPrestationsByCategorieId(int $categ_id): array
     {
         try {
@@ -52,6 +47,11 @@ class PrestationsService
         $category = Categorie::create(['libelle' => $libelle, 'description' => $description]);
 
         return $category->save();
+    }
+
+    public function getPrestations(): array
+    {
+        return Prestation::all()->toArray();
     }
 
     public function getCategories(): array
