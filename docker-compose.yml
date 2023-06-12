@@ -9,7 +9,7 @@ services:
     image: 'canals/php:latest'
     ports:
       - '7840:80'
-    volumes:  
+    volumes:
       - './shared/img:/var/www/html/img'
       - './gift.appli/public:/var/www/html'
       - './gift.appli/src:/var/www/src'
@@ -38,3 +38,15 @@ services:
       - '4500:8080'
     networks:
       - gift.net
+
+  api:
+    image: canals/php:latest
+    ports:
+      - '7841:80'
+    volumes:
+      - './gift.api/public:/var/www/html'
+      - './gift.api/src:/var/www/src'
+    networks:
+      - gift.net
+    depends_on:
+      - sql
