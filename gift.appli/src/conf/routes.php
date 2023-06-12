@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace gift\app\conf;
 
 use gift\app\actions\AccueilAction;
+use gift\app\actions\authentication\handles\IdentityAuthenticationSignUpHandleAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignInAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignUpAction;
@@ -45,6 +46,7 @@ return function ($app) {
 
     $app->group('/auth', function ($app) {
         $app->get('/signup', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');
+        $app->post('/signup', IdentityAuthenticationSignUpHandleAction::class)->setName('auth.signup.handle');
         $app->get('/signin', IdentityAuthenticationSignInAction::class)->setName('auth.signin');
         $app->get('/signout', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
     });

@@ -27,9 +27,9 @@ final class IdentityUserRepository implements IRepository
             : null;
     }
 
-    public function create(array $data): bool
+    public function create(array $data)
     {
-        return IdentityUser::create($data) != null;
+        return IdentityUser::create($data);
     }
 
     public function update(int $id, array $data): bool
