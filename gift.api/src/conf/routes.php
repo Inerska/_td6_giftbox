@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace gift\api\conf;
 
 use gift\api\actions\FetchAllCategoriesAction;
+use gift\api\actions\FetchAllPrestationsAction;
 use gift\api\actions\FetchBoxByIdAction;
 
 
@@ -15,4 +18,6 @@ return function ($app) {
     $app->get('/api/categories', FetchAllCategoriesAction::class);
 
     $app->get('/api/boxes/{id}', FetchBoxByIdAction::class);
+
+    $app->get('/api/prestations', FetchAllPrestationsAction::class);
 };
