@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 
 class BoxService
 {
-    static function addService(int $serviceId, string $boxId): bool
+    static function addService(string $serviceId, string $boxId): bool
     {
         try {
             $box = self::getById($boxId);
@@ -24,11 +24,10 @@ class BoxService
         }
     }
 
-    static function getById(string $id): array
+    static function getById(string $id): Box
     {
         try {
-            return Box::findOrFail($id)
-                ->toArray();
+            return Box::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new PrestationNotFoundException("Coffret inconnu: " . $id);
         }
@@ -42,7 +41,7 @@ class BoxService
     /**
      * @throws Exception if data is invalid
      */
-    static function create(array $data): bool
+    static function create(array $data): Box
     {
         if (!isset($data['name'])
             || !isset($data['description'])) {
@@ -61,13 +60,15 @@ class BoxService
 
         $box = Box::create([
             'id' => Uuid::uuid4()->toString(),
-            'token' => base64_encode($name . $description),
+            'token' => base64_encode($name),
             'libelle' => $name,
             'description' => $description,
             'montant' => $montant,
             'statut' => $statut,
         ]);
 
-        return $box->save();
+        $box->save();
+
+        return $box;
     }
 }
