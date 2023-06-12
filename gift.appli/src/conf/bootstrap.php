@@ -10,7 +10,7 @@ $app = \Slim\Factory\AppFactory::create();
 
 $app->addErrorMiddleware(true,false,false);
 
-Eloquent::init(__DIR__.'/conf.ini');
+Eloquent::init(__DIR__.'/gift.db.conf.ini.dist');
 
 $twig = Twig::create(__DIR__.'/../template/');
 $app->add(TwigMiddleware::create($app, $twig)) ;
