@@ -1,16 +1,8 @@
 <?php
 
-namespace gift\app\conf;
+namespace gift\api\conf;
 
-use gift\app\actions\AccueilAction;
-use gift\app\actions\BoxAppendServiceToAction;
-use gift\app\actions\BoxCreationAction;
-use gift\app\actions\BoxCreationHandlerAction;
-use gift\app\actions\CategoriesAction;
-use gift\app\actions\CategoriesCreationAction;
-use gift\app\actions\CategoryByIdAction;
-use gift\app\actions\PrestationAction;
-use gift\app\actions\PrestationsAction;
+use gift\api\actions\FetchAllCategoriesAction;
 
 
 return function ($app) {
@@ -18,4 +10,6 @@ return function ($app) {
         $response->getBody()->write('Hello world!');
         return $response;
     });
+
+    $app->get('/api/categories', FetchAllCategoriesAction::class);
 };
