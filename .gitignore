@@ -5,5 +5,8 @@
 /gift.appli/src/composer.lock
 /gift.appli/src/vendor/*
 
+/gift.api/src/composer.lock
+/gift.api/src/vendor/*
+
 #Ignorer le .idea
 *.idea
