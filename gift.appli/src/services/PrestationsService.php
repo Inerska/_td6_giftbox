@@ -15,7 +15,22 @@ class PrestationsService
             return Prestation::findOrFail($id)
                 ->toArray();
         } catch (ModelNotFoundException $e) {
-            throw new PrestationNotFoundException("Prestation inconnue: " . $id);
+            throw new PrestationNotFoundException('Prestation inconnue: ' . $id);
+        }
+    }
+
+    public function getCategories(): array
+    {
+        return Categorie::all()->toArray();
+    }
+
+    public function getCategorieById(int $id): array
+    {
+        try {
+            return Categorie::findOrFail($id)
+                ->toArray();
+        } catch (ModelNotFoundException $e) {
+            throw new PrestationNotFoundException('Catégorie inconnue: ' . $id);
         }
     }
 
@@ -28,7 +43,7 @@ class PrestationsService
                 ->toArray();
 
         } catch (ModelNotFoundException $e) {
-            throw new PrestationNotFoundException("Catégorie inconnue ou sans prestation: " . $categ_id);
+            throw new PrestationNotFoundException('Catégorie inconnue ou sans prestation: ' . $categ_id);
         }
     }
 
