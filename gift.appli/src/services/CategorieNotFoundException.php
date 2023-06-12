@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace gift\app\services;
 
-class CategorieNotFoundException extends \Exception
+use Exception;
+
+class CategorieNotFoundException extends Exception
 {
 
 }
