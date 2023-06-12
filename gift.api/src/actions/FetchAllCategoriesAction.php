@@ -13,7 +13,30 @@ final class FetchAllCategoriesAction extends Action
     public function __invoke(Request $request, Response $response, $args): Response
     {
         $categories = Categorie::all();
-        $response->getBody()->write(json_encode($categories));
+        $categoriesOutput = [];
+
+        foreach ($categories as $category) {
+            $categoriesOutput[] = [
+                'categorie' => [
+                    'id' => $category['id'],
+                    'libelle' => $category['libelle'],
+                    'description' => $category['description'],
+                ],
+                'links' => [
+                    'self' => [
+                        'href' => "/categories/{$category['id']}/"
+                    ]
+                ],
+            ];
+        }
+
+        $output = [
+            'type' => 'collection',
+            'count' => count($categoriesOutput),
+            'categories' => $categoriesOutput,
+        ];
+
+        $response->getBody()->write(json_encode($output));
 
         if (empty($categories)) {
             return $response
