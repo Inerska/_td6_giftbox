@@ -1,0 +1,7 @@
+driver=mysql
+username=user1
+password=mdpuser1
+host=sql
+database=test_giftbox
+charset=utf8
+collation=utf8_unicode_ci
