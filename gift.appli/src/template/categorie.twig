@@ -1,13 +1,26 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <h2>Catégorie</h2>
 
-    <p>ID: {{ categorie.id }}</p>
-    <p>Libellé: {{ categorie.libelle }}</p>
-    <p>Description: {{ categorie.description }}</p>
+    <div class="flex justify-center mt-20">
+        <div class="max-w-3xl">
+            <div class="bg-gray-200 rounded-lg p-8">
+                <h2 class="text-2xl font-bold text-center mb-4">{{ categorie.libelle }}</h2>
+                <ul class="border-t-2 border-black-300">
+                    {% for prestation in prestations %}
+                        <li class="flex items-center py-4 px-4">
+                            <a href="{{ url_for('prestation', {'id': prestation.id}) }}" class="flex items-center">
+                                <img src="/img/{{ prestation.img }}" alt="{{ prestation.description }}" class="w-16 h-16 mr-4">
+                                <div>
+                                    <h3 class="text-lg font-bold">{{ prestation.libelle }}</h3>
+                                    <p class="text-gray-700">{{ prestation.description }}</p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ url_for('prestations', {'id': categorie.id}) }}">Voir les prestations</a>
-
-    <a href="{{ url_for('categories') }}">Retour à la liste des catégories</a>
 {% endblock %}
