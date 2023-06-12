@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace gift\app\conf;
 
 use gift\app\actions\AccueilAction;
+use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
+use gift\app\actions\authentication\IdentityAuthenticationSignInAction;
+use gift\app\actions\authentication\IdentityAuthenticationSignUpAction;
 use gift\app\actions\BoxAppendServiceToAction;
 use gift\app\actions\BoxCreationAction;
 use gift\app\actions\BoxCreationHandlerAction;
@@ -13,6 +16,11 @@ use gift\app\actions\CategoriesCreationAction;
 use gift\app\actions\CategoryByIdAction;
 use gift\app\actions\PrestationAction;
 use gift\app\actions\PrestationsAction;
+use gift\app\actions\SigninAction;
+use gift\app\actions\SigninHandlerAction;
+use gift\app\actions\SignoutAction;
+use gift\app\actions\SignupAction;
+use gift\app\actions\SignupHandlerAction;
 
 
 return function ($app) {
@@ -34,5 +42,11 @@ return function ($app) {
     $app->post('/boxes/new', BoxCreationHandlerAction::class)->setName('box_creation_handler');
 
     $app->post('/boxes/{id}/services', BoxAppendServiceToAction::class)->setName('box_append_service_to');
+
+    $app->group('/auth', function ($app) {
+        $app->get('/signup', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');
+        $app->get('/signin', IdentityAuthenticationSignInAction::class)->setName('auth.signin');
+        $app->get('/signout', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
+    });
 
 };
