@@ -20,7 +20,7 @@ return function ($app) {
 
     $app->get('/api/categories/{id}/prestations', FetchAllPrestationsFromCategoryIdAction::class);
 
-    $app->get('/api/boxes/{id}', FetchBoxByIdAction::class);
+    $app->get('/api/coffrets/{id}', FetchBoxByIdAction::class);
 
     $app->get('/api/prestations', FetchAllPrestationsAction::class);
 };
