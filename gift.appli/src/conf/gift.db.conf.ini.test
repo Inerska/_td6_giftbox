@@ -1,7 +1,7 @@
 driver=mysql
-username=user1
-password=mdpuser1
-host=sql
+username=root
+password=root
+host=0.0.0.0:3309
 database=test_giftbox
 charset=utf8
 collation=utf8_unicode_ci

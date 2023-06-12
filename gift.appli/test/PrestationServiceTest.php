@@ -32,7 +32,14 @@ final class PrestationServiceTest extends TestCase
         self::$categories = [$c1, $c2];
 
         for ($i = 1; $i <= 4; $i++) {
-            $p = Prestation::create(['id' => $faker->uuid(), 'libelle' => $faker->word(), 'description' => $faker->paragraph(3), 'tarif' => $faker->randomFloat(2, 20, 200), 'unite' => $faker->numberBetween(1, 3)]);
+            $p = Prestation::create([
+                'id' => $faker->uuid(),
+                'libelle' => $faker->word(),
+                'description' => $faker->paragraph(3),
+                'tarif' => $faker->randomFloat(2, 20, 200),
+                'img' => $faker->imageUrl(),
+                'unite' => $faker->numberBetween(1, 3)
+            ]);
             array_push(self::$prestations, $p);
         }
 
