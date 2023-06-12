@@ -8,7 +8,7 @@
         <img src="/img/{{ prestation.img }}" alt="{{ prestation.description }}">
     </div>
 
-    <a href="{{ url_for('append_service_to') }}?id={{ prestation.id }}" class="p-2 mt-5 bg-gray-400 text-white font-semibold">Ajouter la prestation au coffret</a>
+    <a href="{{ url_for('box_append_service_to') }}?id={{ prestation.id }}" class="p-2 mt-5 bg-gray-400 text-white font-semibold">Ajouter la prestation au coffret</a>
     <a href="{{ url_for('prestations') }}?id={{ prestation.cat_id }}" class="p-2 mt-5 bg-blue-400 text-white font-semibold">Retour aux prestations</a>
 
 {% endblock %}
