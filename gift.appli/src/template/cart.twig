@@ -5,9 +5,13 @@
     {% if cartService.cart() %}
         <div>
             <h1>Vous avez {{ cartService.cart().prestations().count() }} prestation(s) dans votre coffret</h1>
+            {% set prestationsCount = {} %}
+            {% for prestation in cartService.cart().prestations().get() %}
+                {% set prestationsCount = prestationsCount|merge({(prestation.libelle): (prestationsCount[prestation.libelle]|default(0))+1}) %}
+            {% endfor %}
             <ul>
-                {% for prestation in cartService.cart().prestations().get() %}
-                    <li>- {{ prestation.libelle }}</li>
+                {% for libelle, count in prestationsCount %}
+                    <li>- {{ libelle }} {% if count > 1 %} x{{ count }}{% endif %}</li>
                 {% endfor %}
             </ul>
         </div>
