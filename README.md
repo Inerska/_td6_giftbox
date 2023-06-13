@@ -2,7 +2,7 @@ Projet MyGiftBox.net - README
 
 Description générale
 
-Le projet MyGiftBox.net a été développé dans le cadre de l'enseignement d'architecture logicielle du parcours Réalisation d'applications: Développement Web et Mobile à l'IUT Nancy-Charlemagne par Alexis Gridel, Théo Pellizzari et Samuel Pomin. Il s'agit d'une application web permettant de choisir, acheter et offrir des coffrets-cadeaux personnalisés. Les coffrets-cadeaux sont composés d'un ensemble de prestations variées telles que des activités sportives, des activités culturelles, de la gastronomie, de l'hébergement, des visites, etc.
+Le projet MyGiftBox.net a été développé dans le cadre du cours d'architecture logicielle par Alexis Gridel, Théo Pellizzari et Samuel Pomin. Il s'agit d'une application web permettant de choisir, acheter et offrir des coffrets-cadeaux personnalisés. Les coffrets-cadeaux sont composés d'un ensemble de prestations variées telles que des activités sportives, des activités culturelles, de la gastronomie, de l'hébergement, des visites, etc.
 
 L'application MyGiftBox.net offre les fonctionnalités suivantes :
 
