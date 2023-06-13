@@ -22,10 +22,12 @@ class BoxCreationHandlerAction extends Action
     {
         $libelle = $request->getParsedBody()['libelle'];
         $description = $request->getParsedBody()['description'];
+        $message = $request->getParsedBody()['message'] ?? '';
 
         $result = BoxService::create([
             'name' => $libelle,
-            'description' => $description
+            'description' => $description,
+            'message' => $message
         ]);
 
         if (!$result) {
@@ -35,7 +37,8 @@ class BoxCreationHandlerAction extends Action
         return Twig::fromRequest($request)->render($response, 'boxCreation.twig',
             [
                 'libelle' => $libelle,
-                'description' => $description
+                'description' => $description,
+                'message' => $message
             ]
         );
 

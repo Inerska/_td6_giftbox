@@ -96,6 +96,7 @@ final class BoxService
         $description = htmlspecialchars($data['description']);
         $montant = $data['montant'] ?? 0;
         $statut = $data['statut'] ?? Box::CREATED;
+        $message = htmlspecialchars($data['message']) ?? '';
 
         if ($name !== $data['name']
             || $description !== $data['description']) {
@@ -109,6 +110,7 @@ final class BoxService
             'description' => $description,
             'montant' => $montant,
             'statut' => $statut,
+            'message' => $message
         ]);
 
         $box->save();

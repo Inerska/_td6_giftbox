@@ -5,13 +5,26 @@
     <h1>Création d'une box</h1>
     <form method="post">
         <label for="libelle">Libellé</label>
-        <input type="text" name="libelle" id="libelle" />
+        <input type="text" name="libelle" id="libelle"/>
         <br>
         <label for="description">Description</label>
         <textarea name="description" id="description"></textarea>
+        <label for="cadeau">Cadeau ?</label>
+        <input type="checkbox" name="cadeau" id="cadeau"/>
+        <div id="giftMessage">
+            <label for="message">Message pour le cadeau:</label>
+            <input type="text" id="message" name="message" disabled>
+        </div>
         <br>
-        <input type="submit" value="Créer" />
+        <input type="submit" value="Créer"/>
     </form>
 
-{% endblock %}
+    <script>
+        document.getElementById('cadeau').addEventListener('change', function () {
+            const giftMessage = document.querySelector('#giftMessage input');
 
+            giftMessage.disabled = !this.checked;
+        });
+    </script>
+
+{% endblock %}
