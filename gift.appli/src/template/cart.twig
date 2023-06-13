@@ -1,14 +1,23 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <h1>Cart</h1>
+    <h1 class="text-2xl text-center">Votre coffret</h1>
     {% if cartService.cart() %}
         <div>
-            <h1>L'utilisateur a un coffret en session</h1>
+            <h1>Vous avez 0 prestation(s) dans votre coffret</h1>
+            <ul>
+            </ul>
         </div>
     {% else %}
         <div>
-            <h1>L'utilisateur n'a pas de coffret en session</h1>
+            <h1>Aucun coffret, souhaitez-vous en créer un ?</h1>
+            <a href="{{ url_for('box_creation') }}">Créer un coffret</a>
+
+            <h1>Ou bien choisissez-en un</h1>
+            <ul>
+                <li>Coffret1</li>
+                <li>Coffret2</li>
+            </ul>
         </div>
     {% endif %}
 {% endblock %}
