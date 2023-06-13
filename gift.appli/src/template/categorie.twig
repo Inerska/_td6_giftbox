@@ -4,16 +4,23 @@
 
     <div class="flex justify-center mt-20">
         <div class="max-w-3xl">
-            <div class="bg-gray-200 rounded-lg p-8">
-                <h2 class="text-2xl font-bold text-center mb-4">{{ categorie.libelle }}</h2>
-                <ul class="border-t-2 border-black-300">
+            <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                <h2 class="text-2xl font-bold text-center mb-4 capitalize">{{ categorie.libelle }}</h2>
+                <ul class="space-y-4">
                     {% for prestation in prestations %}
-                        <li class="flex items-center py-4 px-4 hover:bg-gray-100 transition duration-300 ease-in-out">
+                        <li class="bg-gray-200 rounded-lg p-4 border-b-2 border-gray-200 hover:scale-105 hover:bg-gray-300">
                             <a href="{{ url_for('prestation', {'id': prestation.id}) }}" class="flex items-center">
-                                <img src="/img/{{ prestation.img }}" alt="{{ prestation.description }}" class="w-16 h-16 mr-4">
-                                <div>
-                                    <h3 class="text-lg font-bold">{{ prestation.libelle }}</h3>
-                                    <p class="text-gray-700">{{ prestation.description }}</p>
+                                <div class="flex items-center justify-between w-full">
+                                    <div class="flex items-center">
+                                        <img src="/img/{{ prestation.img }}" alt="{{ prestation.description }}" class="w-16 h-16 mr-4 transform transition-transform duration-300">
+                                        <div>
+                                            <h3 class="text-lg font-bold">{{ prestation.libelle }}</h3>
+                                            <p class="text-gray-700">{{ prestation.description }}</p>
+                                        </div>
+                                    </div>
+                                    <svg class="ml-auto self-start" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.0378 6.34317L13.6269 7.76069L16.8972 11.0157L3.29211 11.0293L3.29413 13.0293L16.8619 13.0157L13.6467 16.2459L15.0643 17.6568L20.7079 11.9868L15.0378 6.34317Z" fill="currentColor"/>
+                                    </svg>
                                 </div>
                             </a>
                         </li>
