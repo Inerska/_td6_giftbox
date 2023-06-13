@@ -12,12 +12,14 @@
             <p class="text-xl font-bold">{{ prestation.tarif }}€</p>
         </div>
         <div class="flex justify-center">
+            {% if service.isAuthenticate() %}
             <form action="{{ url_for('box_append_service_to', {'id': prestation.id}) }}" method="POST">
                 <button type="submit"
                         class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 mr-2">
                     Ajouter au coffret
                 </button>
             </form>
+            {% endif %}
             <a href="{{ url_for('prestations', {'id': prestation.cat_id}) }}"
                class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400">Retour
                 aux prestations</a>
