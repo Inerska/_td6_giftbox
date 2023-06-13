@@ -13,8 +13,7 @@ class BoxAppendServiceToAction extends Action
 {
     public function __invoke(Request $request, Response $response, $args): Response
     {
-        //TODO: L'ajouter en session
-        $currentBoxId = $_SESSION['currentBoxId'];
+        $currentBoxId = $_SESSION['box']['id'];
         try {
             $currentBox = BoxService::getById($currentBoxId);
             $serviceId = $args['id'];
