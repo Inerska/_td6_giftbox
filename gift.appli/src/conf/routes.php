@@ -7,8 +7,8 @@ namespace gift\app\conf;
 use gift\app\actions\AccueilAction;
 use gift\app\actions\authentication\handles\IdentityAuthenticationSignInHandleAction;
 use gift\app\actions\authentication\handles\IdentityAuthenticationSignUpHandleAction;
-use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignInAction;
+use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignUpAction;
 use gift\app\actions\BoxAppendServiceToAction;
 use gift\app\actions\BoxCreationAction;
@@ -56,6 +56,7 @@ return function ($app) {
         $app->get('/signout', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
     });
 
-    $app->get('/cart', CartAction::class)->setName('cart');
+    $app->get('/cart', CartAction::class)
+        ->setName('cart');
 
 };
