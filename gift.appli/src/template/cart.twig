@@ -2,4 +2,13 @@
 
 {% block body %}
     <h1>Cart</h1>
+    {% if cartService.cart() %}
+        <div>
+            <h1>L'utilisateur a un coffret en session</h1>
+        </div>
+    {% else %}
+        <div>
+            <h1>L'utilisateur n'a pas de coffret en session</h1>
+        </div>
+    {% endif %}
 {% endblock %}

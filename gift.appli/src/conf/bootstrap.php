@@ -24,6 +24,6 @@ $twig->getEnvironment()
     ->addGlobal('service', AuthenticationStateProviderService::getInstance());
 
 $twig->getEnvironment()
-    ->addGlobal('boxService', BoxService::getInstance());
+    ->addGlobal('cartService', BoxService::getInstance());
 
 return $app;

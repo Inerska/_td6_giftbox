@@ -94,4 +94,13 @@ final class BoxService
 
         return $box;
     }
+
+    public function cart(): ?Box
+    {
+        if (!isset($_SESSION['box'])) {
+            return null;
+        }
+
+        return $_SESSION['box'];
+    }
 }
