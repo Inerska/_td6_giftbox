@@ -1,26 +1,33 @@
 {% extends 'layout.twig' %}
 
-{% block body %}
+  {% block body %}
 
-  <div class="flex justify-center mt-20">
-    <div class="max-w-3xl">
-      <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
-        <h2 class="text-2xl font-bold text-center mb-2">Catégories</h2>
-        <ul class="space-y-4">
-          {% for categorie in categories %}
-            <li class="bg-gray-200 rounded-lg p-4 border-b-2 border-gray-300">
-              <a href="{{ url_for('categorie', {'id': categorie.id}) }}">
-                <div class="flex items-center justify-between mb-2">
-                  <h3 class="text-lg font-bold">{{ categorie.libelle }}</h3>
-                  <span class="text-gray-500 text-sm">{{ categorie.id }}</span>
-                </div>
-                <p class="text-gray-700">{{ categorie.description }}</p>
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
+      <div class="flex justify-center mt-20">
+          <div class="max-w-3xl">
+              <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                  <h2 class="text-2xl font-bold text-center mb-2">Catégories</h2>
+                  <h2 class="text-2xl font-bold text-center mb-2">Bonjour
+                      {% if service.user() is not null %}
+                          **{{ service.user().email }}**
+                      {% else %}
+                          **Invité**
+                      {% endif %}
+                  </h2>
+                  <ul class="space-y-4">
+                      {% for categorie in categories %}
+                          <li class="bg-gray-200 rounded-lg p-4 border-b-2 border-gray-300">
+                              <a href="{{ url_for('categorie', {'id': categorie.id}) }}">
+                                  <div class="flex items-center justify-between mb-2">
+                                      <h3 class="text-lg font-bold">{{ categorie.libelle }}</h3>
+                                      <span class="text-gray-500 text-sm">{{ categorie.id }}</span>
+                                  </div>
+                                  <p class="text-gray-700">{{ categorie.description }}</p>
+                              </a>
+                          </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          </div>
       </div>
-    </div>
-  </div>
 
-{% endblock %}
+  {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace gift\app\actions;
 
+use gift\app\services\auth\AuthenticationStateProviderService;
 use gift\app\services\CategoriesService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,6 +15,7 @@ class AccueilAction extends Action
     {
         return Twig::fromRequest($request)->render($response, 'accueil.twig', [
             'categories' => CategoriesService::getCategories(),
+            'service' => AuthenticationStateProviderService::getInstance(),
         ]);
     }
 }
