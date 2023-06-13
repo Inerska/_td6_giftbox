@@ -2,28 +2,32 @@
 
   {% block body %}
 
-      <div class="flex justify-center mt-20">
+      <div class="flex justify-center">
           <div class="max-w-3xl">
+              <h2 class="text-2xl font-bold text-center mt-10 mb-10">Bonjour
+                  <strong>
+                  {% if service.user() is not null %}
+                      {{ service.user().email }}
+                  {% else %}
+                      Invité
+                  {% endif %}
+                  </strong>
+              </h2>
               <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
-                  <h2 class="text-2xl font-bold text-center mb-2">Catégories</h2>
-                  <h2 class="text-2xl font-bold text-center mb-2">Bonjour
-                      {% if service.user() is not null %}
-                          **{{ service.user().email }}**
-                      {% else %}
-                          **Invité**
-                      {% endif %}
-                  </h2>
+                  <h2 class="text-2xl font-bold text-center mb-4">Catégories</h2>
                   <ul class="space-y-4">
                       {% for categorie in categories %}
-                          <li class="bg-gray-200 rounded-lg p-4 border-b-2 border-gray-300">
-                              <a href="{{ url_for('categorie', {'id': categorie.id}) }}">
+                          <a href="{{ url_for('categorie', {'id': categorie.id}) }}">
+                              <li class="bg-gray-200 rounded-lg p-4 border-b-2 border-gray-300 hover:scale-105 hover:bg-gray-300 mb-4">
                                   <div class="flex items-center justify-between mb-2">
-                                      <h3 class="text-lg font-bold">{{ categorie.libelle }}</h3>
-                                      <span class="text-gray-500 text-sm">{{ categorie.id }}</span>
+                                      <h3 class="text-lg font-bold capitalize">{{ categorie.libelle }}</h3>
+                                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="M15.0378 6.34317L13.6269 7.76069L16.8972 11.0157L3.29211 11.0293L3.29413 13.0293L16.8619 13.0157L13.6467 16.2459L15.0643 17.6568L20.7079 11.9868L15.0378 6.34317Z" fill="currentColor"/>
+                                      </svg>
                                   </div>
                                   <p class="text-gray-700">{{ categorie.description }}</p>
-                              </a>
-                          </li>
+                              </li>
+                          </a>
                       {% endfor %}
                   </ul>
               </div>
