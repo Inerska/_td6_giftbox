@@ -33,7 +33,10 @@ class BoxCreationHandlerAction extends Action
         }
 
         return Twig::fromRequest($request)->render($response, 'boxCreation.twig',
-            ['libelle' => $libelle, 'description' => $description]
+            [
+                'libelle' => $libelle,
+                'description' => $description
+            ]
         );
 
     }
