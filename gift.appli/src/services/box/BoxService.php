@@ -9,10 +9,27 @@ use gift\app\models\Box;
 use gift\app\services\PrestationNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
+use UserHasAlreadyBoxException;
 
-class BoxService
+final class BoxService
 {
-    static function addService(string $serviceId, string $boxId): bool
+    protected BoxService $instance;
+
+    public function __construct()
+    {
+        $this->instance = $this ?? new BoxService();
+    }
+
+    /**
+     * @return BoxService
+     */
+    public static function getInstance(): BoxService
+    {
+        return self::$instance
+            ?? new BoxService();
+    }
+
+    public static function addService(string $serviceId, string $boxId): bool
     {
         try {
             $box = self::getById($boxId);
@@ -24,16 +41,16 @@ class BoxService
         }
     }
 
-    static function getById(string $id): Box
+    public static function getById(string $id): Box
     {
         try {
             return Box::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            throw new PrestationNotFoundException("Coffret inconnu: " . $id);
+            throw new PrestationNotFoundException('Coffret inconnu: ' . $id);
         }
     }
 
-    static function removeService(array $data): bool
+    public static function removeService(array $data): bool
     {
         throw new Exception('Not implemented');
     }
@@ -41,8 +58,12 @@ class BoxService
     /**
      * @throws Exception if data is invalid
      */
-    static function create(array $data): Box
+    public static function create(array $data): Box
     {
+        if (isset($_SESSION['box'])) {
+            throw new UserHasAlreadyBoxException('Box already exists');
+        }
+
         if (!isset($data['name'])
             || !isset($data['description'])) {
             throw new Exception('Invalid data: name or description or montant or image or category_id not provided');
@@ -68,6 +89,8 @@ class BoxService
         ]);
 
         $box->save();
+
+        $_SESSION['box'] = $box;
 
         return $box;
     }

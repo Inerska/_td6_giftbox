@@ -51,7 +51,7 @@ class AuthenticationStateProviderService
 
         $_SESSION['user'] = $user;
 
-        return $user;
+        return $user !== null;
     }
 
     /**

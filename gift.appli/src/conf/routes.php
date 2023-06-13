@@ -7,12 +7,13 @@ namespace gift\app\conf;
 use gift\app\actions\AccueilAction;
 use gift\app\actions\authentication\handles\IdentityAuthenticationSignInHandleAction;
 use gift\app\actions\authentication\handles\IdentityAuthenticationSignUpHandleAction;
-use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignInAction;
+use gift\app\actions\authentication\IdentityAuthenticationSignOutAction;
 use gift\app\actions\authentication\IdentityAuthenticationSignUpAction;
 use gift\app\actions\BoxAppendServiceToAction;
 use gift\app\actions\BoxCreationAction;
 use gift\app\actions\BoxCreationHandlerAction;
+use gift\app\actions\CartAction;
 use gift\app\actions\CategoriesAction;
 use gift\app\actions\CategoriesCreationAction;
 use gift\app\actions\CategoryByIdAction;
@@ -48,9 +49,14 @@ return function ($app) {
     $app->group('/auth', function ($app) {
         $app->get('/signup', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');
         $app->post('/signup', IdentityAuthenticationSignUpHandleAction::class)->setName('auth.signup.handle');
+
         $app->get('/signin', IdentityAuthenticationSignInAction::class)->setName('auth.signin');
         $app->post('/signin', IdentityAuthenticationSignInHandleAction::class)->setName('auth.signin.handle');
+
         $app->get('/signout', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
     });
+
+    $app->get('/cart', CartAction::class)
+        ->setName('cart');
 
 };

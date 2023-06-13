@@ -1,6 +1,7 @@
 <?php
 
 use gift\app\services\auth\AuthenticationStateProviderService;
+use gift\app\services\box\BoxService;
 use gift\app\services\utils\Eloquent;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
@@ -21,5 +22,8 @@ $twig->getEnvironment()
 
 $twig->getEnvironment()
     ->addGlobal('service', AuthenticationStateProviderService::getInstance());
+
+$twig->getEnvironment()
+    ->addGlobal('boxService', BoxService::getInstance());
 
 return $app;
