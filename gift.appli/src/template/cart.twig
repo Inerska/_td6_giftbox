@@ -4,8 +4,11 @@
     <h1 class="text-2xl text-center">Votre coffret</h1>
     {% if cartService.cart() %}
         <div>
-            <h1>Vous avez 0 prestation(s) dans votre coffret</h1>
+            <h1>Vous avez {{ cartService.cart().prestations().count() }} prestation(s) dans votre coffret</h1>
             <ul>
+                {% for prestation in cartService.cart().prestations().get() %}
+                    <li>- {{ prestation.libelle }}</li>
+                {% endfor %}
             </ul>
         </div>
     {% else %}

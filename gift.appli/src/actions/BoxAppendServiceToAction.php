@@ -18,18 +18,22 @@ class BoxAppendServiceToAction extends Action
             $currentBox = BoxService::getById($currentBoxId);
             $serviceId = $args['id'];
 
-            BoxService::addService($currentBox->id, $serviceId);
+            $res = BoxService::getInstance()->addService($serviceId, $currentBoxId);
+
+            var_dump($res);
 
         } catch (PrestationNotFoundException $e) {
+
+            $response->getBody()->write('Service not found');
+
             return $response
                 ->withStatus(404)
-                ->withHeader('Content-Type', 'text/html')
-                ->withHeader('Message', 'Box not found');
+                ->withHeader('Content-Type', 'text/html');
         }
 
+        $response->getBody()->write('Service added to box');
+
         return $response
-            ->withStatus(200)
-            ->withHeader('Content-Type', 'text/html')
-            ->withHeader('Message', 'Box updated');
+            ->withStatus(200);
     }
 }

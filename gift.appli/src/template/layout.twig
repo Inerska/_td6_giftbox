@@ -23,7 +23,7 @@
                     </svg>
                 </a>
                 <div class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center -mt-1 -mr-1">
-                    <span class="text-xs font-semibold">{{ cartService.cart().montant }}</span>
+                    <span class="text-xs font-semibold">{{ cartService.cart().prestations().count() }}</span>
                 </div>
             </div>
         {% else %}

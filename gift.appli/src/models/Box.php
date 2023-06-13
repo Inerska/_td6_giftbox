@@ -2,25 +2,24 @@
 
 namespace gift\app\models;
 
-use gift\app\models\Prestation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Box extends Model
 {
 
+    public const CREATED = 1;
+    public const VALIDATED = 2;
+    public const PAYED = 3;
+    public const DELIVERED = 4;
+    public const USD = 5;
+    public $incrementing = false;
+    public $keyType = 'string';
     protected $table = 'box';
     protected $primaryKey = 'id';
-    public $incrementing = false;
-    public $keyType = "string";
     protected $fillable = ['id', 'libelle', 'description', 'kdo', 'message_kdo', 'token', 'statut', 'montant'];
 
-    const CREATED = 1;
-    const VALIDATED = 2;
-    const PAYED = 3;
-    const DELIVERED = 4;
-    const USD = 5;
-
-    public function prestations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function prestations(): BelongsToMany
     {
         return $this->belongsToMany(Prestation::class, 'box2presta', 'box_id', 'presta_id')
             ->withPivot('quantite')

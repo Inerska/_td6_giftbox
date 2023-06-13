@@ -7,17 +7,17 @@ namespace gift\app\services\box;
 use Exception;
 use gift\app\models\Box;
 use gift\app\services\PrestationNotFoundException;
+use gift\app\services\PrestationsService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
 use UserHasAlreadyBoxException;
 
 final class BoxService
 {
-    protected BoxService $instance;
+    private static ?BoxService $instance = null;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->instance = $this ?? new BoxService();
     }
 
     /**
@@ -25,21 +25,44 @@ final class BoxService
      */
     public static function getInstance(): BoxService
     {
-        return self::$instance
-            ?? new BoxService();
+        if (self::$instance === null) {
+            self::$instance = new BoxService();
+        }
+
+        return self::$instance;
     }
 
-    public static function addService(string $serviceId, string $boxId): bool
+    public function addService(string $serviceId, string $boxId): bool
     {
         try {
-            $box = self::getById($boxId);
-            $box->prestations()->attach($serviceId);
-
-            return true;
-        } catch (PrestationNotFoundException $prestationNotFoundException) {
-            return false;
+            $box = Box::findOrFail($boxId);
+        } catch (ModelNotFoundException $e) {
+            throw new Exception('Box not found: ' . $boxId);
         }
+
+        try {
+            $service = PrestationsService::getPrestationById($serviceId);
+        } catch (ModelNotFoundException $e) {
+            throw new Exception('Service not found: ' . $serviceId);
+        }
+
+        if ($service === null) {
+            throw new Exception('Service not found (null): ' . $serviceId);
+        }
+
+        $box->prestations()->attach($serviceId, [
+            'quantite' => 1,
+        ]);
+
+        var_dump($service);
+        $box->montant += intval($service['tarif']);
+        $box->save();
+
+        $_SESSION['box'] = $box;
+
+        return true;
     }
+
 
     public static function getById(string $id): Box
     {
