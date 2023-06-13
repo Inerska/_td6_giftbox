@@ -54,7 +54,6 @@ final class BoxService
             'quantite' => 1,
         ]);
 
-        var_dump($service);
         $box->montant += intval($service['tarif']);
         $box->save();
 
