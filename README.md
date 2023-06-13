@@ -47,3 +47,18 @@ Le répertoire template contient les fichiers de modèle utilisés pour génére
 Le répertoire sql contient les fichiers SQL utilisés pour la création et la gestion de la base de données.
 Cette structure de répertoires permet une séparation claire des différentes parties du projet, ce qui facilite la maintenance, la collaboration et l'extension du code source. Chaque répertoire a un rôle spécifique dans l'architecture globale de l'application, ce qui rend le code plus organisé et plus facile à comprendre.
 
+Routes de bases de l'API
+
+Les routes de l'API sont définies dans le fichier de configuration gift\api\conf\routes.php. Voici une description de chaque route :
+
+GET /api : Cette route renvoie simplement le message "Hello world!". C'est une route de test pour vérifier si l'API fonctionne correctement.
+
+GET /api/categories : Cette route renvoie toutes les catégories disponibles. Permet de récupérer la liste complète des catégories pour affichage ou traitement ultérieur.
+
+GET /api/categories/{id}/prestations : Cette route renvoie toutes les prestations associées à une catégorie spécifique. Permet de récupérer les prestations d'une catégorie donnée pour affichage ou traitement ultérieur.
+
+GET /api/coffrets/{id} : Cette route renvoie les informations d'un coffret spécifique identifié par son ID. Permet de récupérer les détails d'un coffret pour affichage ou traitement ultérieur.
+
+GET /api/prestations : Cette route renvoie toutes les prestations disponibles. Permet de récupérer la liste complète des prestations pour affichage ou traitement ultérieur.
+
+Chaque route est associée à une action spécifique qui sera exécutée lorsqu'une requête est reçue sur cette route. Les actions sont définies dans les classes correspondantes, telles que FetchAllCategoriesAction, FetchAllPrestationsFromCategoryIdAction, FetchBoxByIdAction, et FetchAllPrestationsAction.
