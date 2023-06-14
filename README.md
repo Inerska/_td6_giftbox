@@ -18,7 +18,7 @@ L'application MyGiftBox.net offre les fonctionnalités suivantes :
 
 Pour installer et exécuter le projet MyGiftBox.net, suivez les étapes ci-dessous :
 
-1. Clonez le dépôt Git du projet depuis l'URL suivante : [URL_DU_DEPOT_GIT].
+1. Clonez le dépôt Git du projet depuis l'URL suivante : https://github.com/Inerska/_td6_giftbox.git
 2. Assurez-vous d'avoir Docker installé sur votre machine.
 3. Naviguez vers le répertoire racine du projet cloné.
 4. Ouvrez le fichier `docker-compose.yml` et vérifiez les ports utilisés par les services. Par défaut, les ports 7840 et 7841 sont utilisés pour les services PHP.
