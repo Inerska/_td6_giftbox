@@ -1,5 +1,7 @@
 # Projet MyGiftBox.net - README
 
+Trello : https://trello.com/invite/espacedetravailuser34047100/ATTIbea51f55d0b6a0b679f8950936ed43a23533F6B7
+
 ## Description générale
 
 Le projet MyGiftBox.net a été développé dans le cadre du cours d'architecture logicielle par Alexis Gridel, Théo Pellizzari et Samuel Pomin. Il s'agit d'une application web permettant de choisir, acheter et offrir des coffrets-cadeaux personnalisés. Les coffrets-cadeaux sont composés d'un ensemble de prestations variées telles que des activités sportives, des activités culturelles, de la gastronomie, de l'hébergement, des visites, etc.
