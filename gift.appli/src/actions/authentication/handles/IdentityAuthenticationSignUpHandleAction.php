@@ -17,7 +17,7 @@ final class IdentityAuthenticationSignUpHandleAction extends IdentityAction
 
         try {
             $this->authenticationStateProviderService->signUp(
-                $data['pseudonyme'],
+                $data['username'],
                 $data['email'],
                 $data['password']
             );
