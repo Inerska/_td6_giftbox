@@ -32,8 +32,10 @@ final class BoxService
         return self::$instance;
     }
 
-    public function addService(string $serviceId, string $boxId): bool
+    public function addService(string $serviceId, string $boxId, int $quantity): bool
     {
+        var_dump($serviceId, $boxId, $quantity);
+
         try {
             $box = Box::findOrFail($boxId);
         } catch (ModelNotFoundException $e) {
@@ -50,18 +52,22 @@ final class BoxService
             throw new Exception('Service not found (null): ' . $serviceId);
         }
 
-        $box->prestations()->attach($serviceId, [
-            'quantite' => 1,
-        ]);
+        if ($box->prestations()->where('presta_id', $serviceId)->exists()) {
+            $result = $box->prestations()->updateExistingPivot($serviceId, ['quantite' => $quantity]);
 
-        $box->montant += intval($service['tarif']);
+        } else {
+            $result = $box->prestations()->attach($serviceId, ['quantite' => $quantity]);
+        }
+
+
+        $box->montant += intval($service['tarif']) * $quantity;
         $box->save();
 
+        $box->load('prestations');
         $_SESSION['box'] = $box;
 
         return true;
     }
-
 
     public static function getById(string $id): Box
     {

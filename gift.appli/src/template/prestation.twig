@@ -13,15 +13,14 @@
                 <p class="text-xl font-bold">{{ prestation.tarif }}€</p>
             </div>
             <div class="flex justify-center">
-
-
-                    <form action="{{ url_for('box_append_service_to', {'id': prestation.id}) }}" method="POST">
-                        <button type="submit"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mr-2">
-                            Ajouter au coffret
-                        </button>
-                        <input type="hidden" name="return_url" value="{{ app.url }}">
-                    </form>
+                <form action="{{ url_for('box_append_service_to', {'id': prestation.id}) }}" method="POST">
+                    <input type="number" name="quantity" min="1" value="1" class="mb-4 text-center">
+                    <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mr-2">
+                        Ajouter au coffret
+                    </button>
+                    <input type="hidden" name="return_url" value="{{ app.url }}">
+                </form>
 
                 <a href="{{ url_for('categorie', {'id': prestation.cat_id}) }}"
                    class="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mr-2">Retour
@@ -31,4 +30,3 @@
     </div>
 
 {% endblock %}
-
