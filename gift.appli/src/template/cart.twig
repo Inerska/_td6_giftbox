@@ -1,6 +1,65 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
+
+    <div class="flex flex-col items-center bg-gray-100 py-10">
+        <h1 class="text-2xl font-bold mb-4">Votre coffret</h1>
+        <div class="w-full mb-8">
+            {% if cartService.cart() %}
+            <ul class="space-y-4 px-8">
+                <li class="flex items-center border-b pb-2">
+                    <img src="image1.jpg" alt="Produit 1" class="w-12 h-12 object-cover rounded mr-4">
+                    <div class="flex flex-col flex-grow">
+                        <span class="font-bold">Produit 1</span>
+                        <span class="text-gray-600">Quantité : 2</span>
+                    </div>
+                    <button class="ml-auto text-red-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </li>
+                <li class="flex items-center border-b pb-2">
+                    <img src="image2.jpg" alt="Produit 2" class="w-12 h-12 object-cover rounded mr-4">
+                    <div class="flex flex-col flex-grow">
+                        <span class="font-bold">Produit 2</span>
+                        <span class="text-gray-600">Quantité : 1</span>
+                    </div>
+                    <button class="ml-auto text-red-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+            {% else %}
+                <p>Aucun coffret</p>*
+            {% endif %}
+        </div>
+        <div class="flex justify-end items-center mb-8">
+            <button class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 focus:outline-none">
+                Créer un coffret
+            </button>
+        </div>
+        <h2 class="text-xl font-bold mb-4">Coffrets prédéfinis</h2>
+        <div id="splide" class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide">
+                        <img src="gift.appli/public/img/animateur.jpg" alt="Panier 1">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="panier2.jpg" alt="Panier 2">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="panier3.jpg" alt="Panier 3">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
     <h1 class="text-2xl text-center">Votre coffret</h1>
     {% if cartService.cart() %}
         <div>

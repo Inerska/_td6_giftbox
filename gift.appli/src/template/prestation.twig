@@ -2,29 +2,31 @@
 
 {% block body %}
 
-    <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-center mb-4">{{ prestation.description }}</h2>
-        <div class="flex justify-center mb-4">
-            <img src="/img/{{ prestation.img }}" alt="Image du produit" class="w-64 h-64 object-cover rounded-lg">
-        </div>
-        <div class="flex items-center justify-between mb-4">
-            <p class="text-xl">{{ prestation.unite }}</p>
-            <p class="text-xl font-bold">{{ prestation.tarif }}€</p>
-        </div>
-        <div class="flex justify-center">
-            {% if cartService.cart() %}
-                <form action="{{ url_for('box_append_service_to', {'id': prestation.id}) }}" method="POST">
-                    <button type="submit"
-                            class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 mr-2">
-                        Ajouter au coffret
-                    </button>
-                    <input type="hidden" name="return_url" value="{{ app.url }}">
-                </form>
+    <div class="flex justify-center items-center h-screen bg-gray-100">
+        <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-center mb-4">{{ prestation.description }}</h2>
+            <div class="flex justify-center mb-4">
+                <img src="/img/{{ prestation.img }}" alt="Image du produit" class="w-64 h-64 object-cover rounded-lg">
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-xl">{{ prestation.unite }}</p>
+                <p class="text-xl font-bold">{{ prestation.tarif }}€</p>
+            </div>
+            <div class="flex justify-center">
 
-            {% endif %}
-            <a href="{{ url_for('prestations', {'id': prestation.cat_id}) }}"
-               class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400">Retour
-                aux prestations</a>
+
+                    <form action="{{ url_for('box_append_service_to', {'id': prestation.id}) }}" method="POST">
+                        <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mr-2">
+                            Ajouter au coffret
+                        </button>
+                        <input type="hidden" name="return_url" value="{{ app.url }}">
+                    </form>
+
+                <a href="{{ url_for('categorie', {'id': prestation.cat_id}) }}"
+                   class="bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mr-2">Retour
+                    aux prestations</a>
+            </div>
         </div>
     </div>
 
