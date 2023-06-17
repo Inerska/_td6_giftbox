@@ -1,18 +1,21 @@
-    <?php
+<?php
 
-    namespace gift\app\models;
+namespace gift\app\models;
 
-    class Categorie extends \Illuminate\Database\Eloquent\Model
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Categorie extends Model
+{
+
+    public $timestamps = false;
+    protected $table = 'categorie';
+    protected $primaryKey = 'id';
+    protected $fillable = ['libelle', 'description'];
+
+    public function prestations(): HasMany
     {
-
-        protected $table = 'categorie';
-        protected $primaryKey = 'id';
-        protected $fillable = ['libelle', 'description'];
-        public $timestamps = false;
-
-        public function prestations(): \Illuminate\Database\Eloquent\Relations\HasMany
-        {
-            return $this->hasMany(Prestation::class, 'cat_id');
-        }
-
+        return $this->hasMany(Prestation::class, 'cat_id');
     }
+
+}
