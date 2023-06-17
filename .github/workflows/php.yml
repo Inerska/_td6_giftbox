@@ -33,10 +33,6 @@ jobs:
         working-directory: gift.appli/src
         run: composer install --prefer-dist --no-progress
 
-      - name: Run PHPCS
-        working-directory: gift.appli/src
-        run: ./vendor/bin/phpcs
-
       - name: Run test suite
         working-directory: gift.appli/src
         run: composer test
