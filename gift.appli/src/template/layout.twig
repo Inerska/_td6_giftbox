@@ -3,6 +3,8 @@
 <head>
     <title></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@v4.0.0/dist/js/splide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@v4.0.0/dist/css/splide.min.css">
 </head>
 <body class="grid-container">
 
@@ -44,4 +46,28 @@
 </footer>
 
 </body>
+
+<!-- Inclure la librairie Splide.js -->
+<script src="https://unpkg.com/@splidejs/splide@3.0.9/dist/js/splide.min.js"></script>
+
+<!-- Initialiser le carrousel -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new Splide('#splide', {
+            type: 'loop',
+            perPage: 1,
+            perMove: 1,
+            gap: 10,
+            autoplay: true,
+            pauseOnHover: false,
+            breakpoints: {
+                768: {
+                    perPage: 2,
+                    gap: 20
+                }
+            }
+        }).mount();
+    });
+</script>
+
 </html>
