@@ -6,34 +6,29 @@
         <h1 class="text-2xl font-bold mb-4">Votre coffret</h1>
         <div class="w-full mb-8">
             {% if cartService.cart() %}
-            <ul class="space-y-4 px-8">
-                <li class="flex items-center border-b pb-2">
-                    <img src="image1.jpg" alt="Produit 1" class="w-12 h-12 object-cover rounded mr-4">
-                    <div class="flex flex-col flex-grow">
-                        <span class="font-bold">Produit 1</span>
-                        <span class="text-gray-600">Quantité : 2</span>
-                    </div>
-                    <button class="ml-auto text-red-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </li>
-                <li class="flex items-center border-b pb-2">
-                    <img src="image2.jpg" alt="Produit 2" class="w-12 h-12 object-cover rounded mr-4">
-                    <div class="flex flex-col flex-grow">
-                        <span class="font-bold">Produit 2</span>
-                        <span class="text-gray-600">Quantité : 1</span>
-                    </div>
-                    <button class="ml-auto text-red-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
+                <ul class="space-y-4 px-8">
+                    {% set prestationsCount = {} %}
+                    {% for prestation in cartService.cart().prestations().get() %}
+                        {% set prestationsCount = prestationsCount|merge({(prestation.id): {"libelle": prestation.libelle, "quantite": (prestationsCount[prestation.id].quantite|default(0)) + prestation.pivot.quantite, "tarif": prestation.tarif, "img": prestation.img}}) %}
+                    {% endfor %}
+                    {% for id, details in prestationsCount %}
+                        <li class="flex items-center border-b pb-2">
+                            <img src="/img/{{ details.img }}" alt="{{ details.libelle }}" class="w-12 h-12 object-cover rounded mr-4">
+                            <div class="flex flex-col flex-grow">
+                                <span class="font-bold">{{ details.libelle }}</span>
+                                <span class="text-gray-600">Quantité : {{ details.quantite }}</span>
+                                <span class="text-gray-600">Prix : {{ details.tarif * details.quantite }}</span>
+                            </div>
+                            <button class="ml-auto text-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% else %}
-                <p>Aucun coffret</p>*
+                <p>Aucun coffret</p>
             {% endif %}
         </div>
         <div class="flex justify-end items-center mb-8">
@@ -59,31 +54,4 @@
         </div>
     </div>
 
-
-    <h1 class="text-2xl text-center">Votre coffret</h1>
-    {% if cartService.cart() %}
-        <div>
-            <h1>Vous avez {{ cartService.cart().prestations().count() }} prestation(s) dans votre coffret</h1>
-            {% set prestationsCount = {} %}
-            {% for prestation in cartService.cart().prestations().get() %}
-                {% set prestationsCount = prestationsCount|merge({(prestation.libelle): (prestationsCount[prestation.libelle]|default(0))+1}) %}
-            {% endfor %}
-            <ul>
-                {% for libelle, count in prestationsCount %}
-                    <li>- {{ libelle }} {% if count > 1 %} x{{ count }}{% endif %}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% else %}
-        <div>
-            <h1>Aucun coffret, souhaitez-vous en créer un ?</h1>
-            <a href="{{ url_for('box_creation') }}">Créer un coffret</a>
-
-            <h1>Ou bien choisissez-en un</h1>
-            <ul>
-                <li>Coffret1</li>
-                <li>Coffret2</li>
-            </ul>
-        </div>
-    {% endif %}
 {% endblock %}
