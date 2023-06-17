@@ -78,9 +78,17 @@ final class BoxService
         }
     }
 
-    public static function removeService(array $data): bool
+    public static function removeService(string $box_id, string $presta_id): array
     {
-        throw new Exception('Not implemented');
+        $box = Box::findOrFail($box_id);
+
+        $box->prestations()->detach($presta_id);
+
+        $box->load('prestations');
+
+        $_SESSION['box'] = $box;
+
+        return $box->prestations->toArray();
     }
 
     /**
