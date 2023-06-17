@@ -19,7 +19,8 @@
                                 <span class="text-gray-600">Quantité : {{ details.quantite }}</span>
                                 <span class="text-gray-600">Prix : {{ details.tarif * details.quantite }}</span>
                             </div>
-                            <a href="{{ url_for('remove_prestation_from_box', {'box_id': box_id, 'presta_id': id }) }}" class="ml-auto text-red-500">
+                            <!--TODO:  url_for('remove_prestation_from_box', {'box_id': box_id, 'presta_id': box_id }) }-->
+                            <a href="" class="ml-auto text-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
