@@ -3,16 +3,20 @@
 {% block title %}Confirmation de payement{% endblock %}
 
 {% block body %}
-    <div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-gray-100 flex justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
-            <div>
+            <div class="bg-white shadow-md rounded-lg px-10 py-12">
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
                     Coffret payé avec succès
                 </h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
-                    Votre payement a été effectué avec succès. Merci pour votre achat !
+                    Votre paiement a été effectué avec succès. Merci pour votre achat !
                 </p>
+                <div class="mt-8 flex justify-center">
+                    <a class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg" href="{{ url_for("accueil") }}">Continuer vos achats</a>
+                </div>
             </div>
         </div>
     </div>
+
 {% endblock %}

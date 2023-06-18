@@ -2,22 +2,30 @@
 
 {% block body %}
 
-    <h1>Création d'une box</h1>
-    <form method="post">
-        <label for="libelle">Libellé</label>
-        <input type="text" name="libelle" id="libelle"/>
-        <br>
-        <label for="description">Description</label>
-        <textarea name="description" id="description"></textarea>
-        <label for="cadeau">Cadeau ?</label>
-        <input type="checkbox" name="cadeau" id="cadeau"/>
-        <div id="giftMessage">
-            <label for="message">Message pour le cadeau:</label>
-            <input type="text" id="message" name="message" disabled>
-        </div>
-        <br>
-        <input type="submit" value="Créer"/>
-    </form>
+    <div class="max-w-md mx-auto p-8 bg-white rounded-lg shadow-md mt-20">
+        <h1 class="text-2xl font-bold mb-6 text-center">Création d'une box</h1>
+        <form method="post" class="space-y-4">
+            <div class="flex flex-col">
+                <label for="libelle" class="text-lg font-medium mb-1">Libellé</label>
+                <input type="text" name="libelle" id="libelle" class="border-gray-300 border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="flex flex-col">
+                <label for="description" class="text-lg font-medium mb-1">Description</label>
+                <textarea name="description" id="description" class="border-gray-300 border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" name="cadeau" id="cadeau" class="mr-2">
+                <label for="cadeau" class="text-lg font-medium">Cadeau ?</label>
+            </div>
+            <div id="giftMessage" class="mt-2">
+                <label for="message" class="text-lg font-medium mb-1">Message pour le cadeau:</label>
+                <input type="text" id="message" name="message" disabled class="w-full border-gray-300 border rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mt-6">
+                <input type="submit" value="Créer" class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600">
+            </div>
+        </form>
+    </div>
 
     <script>
         document.getElementById('cadeau').addEventListener('change', function () {
