@@ -19,9 +19,13 @@ final class PrestationsAction extends Action
             throw new CategorieNotFoundException("L'id de la categorie n'est pas renseigné");
         }
 
+        $sort = $request->getQueryParams()['sort'] ?? null;
+
+        var_dump($sort);
+
         return Twig::fromRequest($request)->render($response, 'prestations.twig',
             ['prestations' => PrestationsService::getPrestationsByCategorieId(
-                intval($args['id'])
+                intval($args['id']), $sort
             )]
         );
     }

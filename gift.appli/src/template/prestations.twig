@@ -3,12 +3,17 @@
 {% block body %}
 
     <h3>Prestations de la categorie</h3>
+
+    <div class="sort">
+        <a href="?sort=asc">Sort by price (Low to High)</a> |
+        <a href="?sort=desc">Sort by price (High to Low)</a>
+    </div>
+
     <ul>
         {% for prestation in prestations %}
-            <li><a href="{{ url_for('prestation', {'id': prestation.id}) }}">{{ prestation.libelle }}</a></li>
+            <li><a href="{{ url_for('prestation', {'id': prestation.id}) }}">{{ prestation.libelle }} - {{ prestation.price }}</a></li>
         {% endfor %}
     </ul>
     <a href="{{ url_for('categorie', {'id': prestations|first.cat_id}) }}">Retour à la categorie</a>
 
 {% endblock %}
-

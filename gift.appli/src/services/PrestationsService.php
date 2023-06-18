@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PrestationsService
 {
+
+
     public static function getPrestationById(string $id): array
     {
         try {
@@ -18,15 +20,25 @@ class PrestationsService
         }
     }
 
-    public static function getPrestationsByCategorieId(int $categ_id): array
+    public static function getPrestationsByCategorieId(int $categ_id, ?string $sort = null): array
     {
         try {
-            return Categorie::findOrFail($categ_id)->prestations()->get()->toArray();
+            $query = Categorie::findOrFail($categ_id)
+                ->prestations();
+
+            if ($sort === 'asc') {
+                $query->orderBy('tarif');
+            } elseif ($sort === 'desc') {
+                $query->orderByDesc('tarif');
+            }
+
+            return $query->get()->toArray();
 
         } catch (ModelNotFoundException $e) {
             throw new PrestationNotFoundException('Catégorie inconnue ou sans prestation: ' . $categ_id);
         }
     }
+
 
     /**
      * @throws Exception if data is invalid

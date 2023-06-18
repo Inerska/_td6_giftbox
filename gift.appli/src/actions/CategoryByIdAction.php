@@ -21,13 +21,15 @@ class CategoryByIdAction extends Action
             throw new CategoryIdNotProvidenException("L'id de la categorie n'est pas renseigné");
         }
 
+        $sort = $request->getQueryParams()['sort'] ?? null;
+
         return Twig::fromRequest($request)->render($response, 'categorie.twig',
             [
                 'categorie' => CategoriesService::getCategorieById(
                     intval($args['id'])
                 ),
                 'prestations' => PrestationsService::getPrestationsByCategorieId(
-                    intval($args['id'])
+                    intval($args['id']), $sort
                 )
             ]
         );
