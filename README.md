@@ -57,7 +57,7 @@ Le code source du projet est organisé de la manière suivante :
 
 Cette structure de répertoires permet une séparation claire des différentes parties du projet, ce qui facilite la maintenance, la collaboration et l'extension du code source. Chaque répertoire a un rôle spécifique dans l'architecture globale de l'application, ce qui rend le code plus organisé et plus facile à comprendre.
 
-# Routes de base de l'API
+# Routes de test de l'application
 
 Les routes de l'API sont définies dans le fichier de configuration `gift/api/conf/routes.php`. Voici une description de chaque route avec une explication de leur utilité :
 
