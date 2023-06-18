@@ -10,6 +10,7 @@ use gift\app\infrastructure\exceptions\auth\InvalidPasswordException;
 use gift\app\models\Identity\IdentityUser;
 use gift\app\services\auth\repositories\IdentityUserRepository;
 use gift\app\services\IRepository;
+use InvalidArgumentException;
 
 class AuthenticationStateProviderService
 {
@@ -37,6 +38,10 @@ class AuthenticationStateProviderService
      */
     public function signUp(string $pseudonyme, string $email, string $password): bool
     {
+        if (!preg_match('/^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{5,}$/', $password)) {
+            throw new InvalidArgumentException('Password must be at least 5 characters, with 1 uppercase letter and 1 symbol.');
+        }
+
         if ($this->repository->any(fn(IdentityUser $user) => $user->email === $email)) {
             throw new EmailAlreadyExistsException('Email already exists');
         }

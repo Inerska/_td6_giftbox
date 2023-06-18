@@ -10,6 +10,7 @@ use gift\app\infrastructure\exceptions\auth\InvalidPasswordException;
 use Illuminate\Support\ItemNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Views\Twig;
 
 final class IdentityAuthenticationSignInHandleAction extends IdentityAction
 {
@@ -30,12 +31,10 @@ final class IdentityAuthenticationSignInHandleAction extends IdentityAction
 
         } catch (EmailDoesNotExistException|InvalidPasswordException|ItemNotFoundException $e) {
 
-            $response->getBody()
-                ->write($e->getMessage());
-
-            return $response
-                ->withStatus(404)
-                ->withHeader('Location', '/auth/signin');
+            return Twig::fromRequest($request)
+                ->render($response, 'authentication/signin.twig', [
+                    'error' => "Email ou mot de passe invalide"
+                ]);
         }
     }
 }
