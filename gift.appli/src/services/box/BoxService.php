@@ -114,7 +114,7 @@ final class BoxService
             return false;
         }
 
-        return $_SESSION['box']['paid'];
+        return $_SESSION['box']['paid'] ?? false;
     }
 
     /**
