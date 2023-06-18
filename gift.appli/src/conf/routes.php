@@ -26,6 +26,7 @@ use gift\app\actions\SigninHandlerAction;
 use gift\app\actions\SignoutAction;
 use gift\app\actions\SignupAction;
 use gift\app\actions\SignupHandlerAction;
+use gift\app\actions\UpdatePrestationQuantityInBoxAction;
 
 
 return function ($app) {
@@ -52,19 +53,27 @@ return function ($app) {
         ->setName('remove_prestation_from_box');
 
     $app->group('/auth', function ($app) {
-        $app->get('/signup', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');
-        $app->post('/signup', IdentityAuthenticationSignUpHandleAction::class)->setName('auth.signup.handle');
+        $app->get('/signup[/]', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');
+        $app->post('/signup[/]', IdentityAuthenticationSignUpHandleAction::class)->setName('auth.signup.handle');
 
-        $app->get('/signin', IdentityAuthenticationSignInAction::class)->setName('auth.signin');
-        $app->post('/signin', IdentityAuthenticationSignInHandleAction::class)->setName('auth.signin.handle');
+        $app->get('/signin[/]', IdentityAuthenticationSignInAction::class)->setName('auth.signin');
+        $app->post('/signin[/]', IdentityAuthenticationSignInHandleAction::class)->setName('auth.signin.handle');
 
-        $app->get('/signout', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
+        $app->get('/signout[/]', IdentityAuthenticationSignOutAction::class)->setName('auth.signout');
     });
 
-    $app->get('/cart', CartAction::class)
-        ->setName('cart');
+    $app->get('/cart[/]', CartAction::class)->setName('cart');
 
-    $app->post('/boxes/{id}/pay', PayBoxAction::class)
-        ->setName('payer');
+    $app->post('/boxes/{id}/pay[/]', PayBoxAction::class)->setName('payer');
 
+    $app->post('/cart/{id}/update/{prestationId}', UpdatePrestationQuantityInBoxAction::class)
+        ->setName('update_prestation_quantity_in_box');
+
+    $app->get('/debug[/]', function ($request, $response, $args) {
+        if (isset($_SESSION)) {
+            session_destroy();
+        }
+
+        return $response->withStatus(200)->withHeader('Location', '/');
+    })->setName('debug');
 };

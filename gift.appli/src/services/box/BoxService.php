@@ -6,6 +6,7 @@ namespace gift\app\services\box;
 
 use Exception;
 use gift\app\models\Box;
+use gift\app\models\Prestation;
 use gift\app\services\PrestationNotFoundException;
 use gift\app\services\PrestationsService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -104,12 +105,29 @@ final class BoxService
         return true;
     }
 
+    /**
+     * @throws PrestationNotFoundException
+     */
+    public static function updatePrestationQuantity(string $cartId, string $prestaId, int $quantity): bool
+    {
+        $box = self::getById($cartId);
+
+        if (!$box->prestations()->where('presta_id', $prestaId)->exists()) {
+            throw new PrestationNotFoundException('Prestation not found in box: ' . $prestaId);
+        }
+
+        $box->prestations()->updateExistingPivot($prestaId, ['quantite' => $quantity]);
+
+        $_SESSION['box'] = $box;
+
+        return true;
+    }
+
+
 
     public function addService(string $serviceId, string $boxId, int $quantity): bool
     {
-        var_dump($serviceId, $boxId, $quantity);
-
-        try {
+            try {
             $box = Box::findOrFail($boxId);
         } catch (ModelNotFoundException $e) {
             throw new Exception('Box not found: ' . $boxId);

@@ -59,7 +59,7 @@ final class IdentityUserRepository implements IRepository
 
         return $users
             ->filter($predicate)
-            ->first()
+            ->firstOrFail()
             ->toArray();
     }
 }

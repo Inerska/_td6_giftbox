@@ -62,7 +62,7 @@ class AuthenticationStateProviderService
     {
         $userArray = $this->repository->first(fn(IdentityUser $user) => $user->email === $email);
 
-        if (!$userArray) {
+        if (empty($userArray)) {
             throw new EmailDoesNotExistException('Email does not exist');
         }
 

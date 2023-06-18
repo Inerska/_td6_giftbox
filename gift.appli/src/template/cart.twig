@@ -23,6 +23,10 @@
                                     </svg>
                                 </button>
                             </form>
+                            <form action="{{ url_for('update_prestation_quantity_in_box', {'id': cartService.cart().id, 'prestationId': id }) }}" method="post" class="inline">
+                                <input type="number" name="quantity" min="1" value="{{ details.quantite }}" class="form-input">
+                                <button type="submit" class="ml-2">Mettre à jour</button>
+                            </form>
 
                         </li>
                     {% endfor %}
