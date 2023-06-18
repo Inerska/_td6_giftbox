@@ -21,6 +21,7 @@ use gift\app\actions\PayBoxAction;
 use gift\app\actions\PrestationAction;
 use gift\app\actions\PrestationsAction;
 use gift\app\actions\RemovePrestationFromBoxAction;
+use gift\app\actions\ShowPaymentConfirmationAction;
 use gift\app\actions\SigninAction;
 use gift\app\actions\SigninHandlerAction;
 use gift\app\actions\SignoutAction;
@@ -76,4 +77,6 @@ return function ($app) {
 
         return $response->withStatus(200)->withHeader('Location', '/');
     })->setName('debug');
+
+    $app->get('/payment-confirmation', ShowPaymentConfirmationAction::class);
 };
