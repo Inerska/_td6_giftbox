@@ -57,12 +57,60 @@ Le code source du projet est organisé de la manière suivante :
 
 Cette structure de répertoires permet une séparation claire des différentes parties du projet, ce qui facilite la maintenance, la collaboration et l'extension du code source. Chaque répertoire a un rôle spécifique dans l'architecture globale de l'application, ce qui rend le code plus organisé et plus facile à comprendre.
 
-## Routes de base de l'API
+# Routes de base de l'API
 
-Les routes de l'API sont définies dans le fichier de configuration `gift/api/conf/routes.php`. Voici une description de chaque route :
+Les routes de l'API sont définies dans le fichier de configuration `gift/api/conf/routes.php`. Voici une description de chaque route avec une explication de leur utilité :
 
-- GET `/api` : Cette route renvoie simplement le message "Hello world!". C'est une route de test pour vérifier si l'API fonctionne correctement.
-- GET `/api/categories` : Cette route renvoie toutes les catégories disponibles. Permet de récupérer la liste complète des catégories pour affichage ou traitement ultérieur.
-- GET `/api/categories/{id}/prestations` : Cette route renvoie toutes les prestations associées à une catégorie spécifique. Permet de récupérer les prestations d'une catégorie donnée pour affichage ou traitement ultérieur.
-- GET `/api/coffrets/{id}` : Cette route renvoie les informations d'un coffret spécifique identifié par son ID. Permet de récupérer les détails d'un coffret pour affichage ou traitement ultérieur.
-- GET `/api/prestations` : Cette route renvoie toutes les prestations disponibles. Permet de récupérer
+- **Accueil** : `/`  
+    Cette route renvoie la page d'accueil de l'application.
+
+- **Liste des catégories** : `/categories`  
+    Cette route renvoie la liste complète des catégories disponibles.
+
+- **Détails d'une catégorie** : `/categorie/{id}`  
+    Cette route renvoie les détails d'une catégorie spécifique identifiée par son ID.
+
+- **Création d'une catégorie** : `/categories/create`  
+    Cette route permet de créer une nouvelle catégorie en affichant un formulaire de création et en traitant les données soumises.
+
+- **Liste des prestations** : `/prestations/{id}`  
+    Cette route renvoie la liste des prestations associées à une catégorie spécifique identifiée par son ID.
+
+- **Détails d'une prestation** : `/prestation/{id}`  
+    Cette route renvoie les détails d'une prestation spécifique identifiée par son ID.
+
+- **Création d'un coffret** : `/boxes/new`  
+    Cette route affiche un formulaire pour créer un nouveau coffret.
+
+- **Traitement de la création d'un coffret** : `/boxes/new`  
+    Cette route traite les données soumises lors de la création d'un nouveau coffret.
+
+- **Ajout d'un service à un coffret** : `/boxes/{id}/services`  
+    Cette route permet d'ajouter un service à un coffret spécifique identifié par son ID.
+
+- **Suppression d'une prestation d'un coffret** : `/boxes/{id}/prestations/{prestationId}`  
+    Cette route permet de supprimer une prestation d'un coffret spécifique identifié par son ID.
+
+- **Inscription et connexion** :  
+    - Inscription : `/auth/signup`  
+    Cette route affiche un formulaire d'inscription et traite les données soumises lors de l'inscription.
+    - Connexion : `/auth/signin`  
+    Cette route affiche un formulaire de connexion et traite les données soumises lors de la connexion.
+
+- **Déconnexion** : `/auth/signout`  
+    Cette route permet à l'utilisateur de se déconnecter de l'application.
+
+- **Panier** : `/cart`  
+    Cette route affiche le contenu du panier de l'utilisateur.
+
+- **Paiement d'un coffret** : `/boxes/{id}/pay`  
+    Cette route permet de procéder au paiement d'un coffret spécifique identifié par son ID.
+
+- **Mise à jour de la quantité d'une prestation dans le panier** : `/cart/{id}/update/{prestationId}`  
+    Cette route permet de mettre à jour la quantité d'une prestation dans le panier.
+
+- **Mode de débogage** : `/debug`  
+    Cette route permet de réinitialiser la session de débogage et redirige vers la page d'accueil.
+
+- **Confirmation de paiement** : `/payment-confirmation`  
+    Cette route affiche la confirmation de paiement après avoir effectué un paiement.
