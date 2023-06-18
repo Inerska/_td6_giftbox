@@ -4,28 +4,33 @@ declare(strict_types=1);
 
 namespace gift\app\actions;
 
-use gift\app\services\box\BoxService;
+use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Views\Twig;
+use gift\app\services\box\BoxService;
 
-final class RemovePrestationFromBoxAction extends Action
+final class RemovePrestationFromBoxAction
 {
     public function __invoke(Request $request, Response $response, $args): Response
     {
-        $boxId = $args['box_id'];
-        $prestaId = $args['presta_id'];
+        $boxId = $args['id'] ?? null;
+        $prestaId = $args['prestationId'] ?? null;
 
-        $box = BoxService::getById($boxId);
-
-        if (!$box) {
-            throw new HttpNotFoundException($request, 'Box not found.');
+        if ($boxId === null
+            || $prestaId === null) {
+            throw new HttpNotFoundException($request, 'Invalid box or prestation id.');
         }
 
-        BoxService::getInstance()->removeService($boxId, $prestaId);
+        try {
+            $result = BoxService::removeService($boxId, $prestaId);
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(['error' => $e->getMessage(),]));
+            return $response->withStatus(500);
+        }
 
-        return Twig::fromRequest($request)
-            ->render($response, 'cart.twig');
+        return $response
+            ->withStatus(302)
+            ->withHeader('Location', '/cart');
     }
 }

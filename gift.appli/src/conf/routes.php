@@ -19,6 +19,7 @@ use gift\app\actions\CategoriesCreationAction;
 use gift\app\actions\CategoryByIdAction;
 use gift\app\actions\PrestationAction;
 use gift\app\actions\PrestationsAction;
+use gift\app\actions\RemovePrestationFromBoxAction;
 use gift\app\actions\SigninAction;
 use gift\app\actions\SigninHandlerAction;
 use gift\app\actions\SignoutAction;
@@ -46,7 +47,8 @@ return function ($app) {
 
     $app->post('/boxes/{id}/services', BoxAppendServiceToAction::class)->setName('box_append_service_to');
 
-    $app->post('/boxes/{id}/prestations/{prestationId}/remove', RemovePrestationFromBoxAction::class)->setName('remove_prestation_from_box');
+    $app->post('/boxes/{id}/prestations/{prestationId}', RemovePrestationFromBoxAction::class)
+        ->setName('remove_prestation_from_box');
 
     $app->group('/auth', function ($app) {
         $app->get('/signup', IdentityAuthenticationSignUpAction::class)->setName('auth.signup');

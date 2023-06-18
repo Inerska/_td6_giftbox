@@ -5,29 +5,29 @@
     <div class="flex flex-col items-center bg-gray-100 py-10">
         <h1 class="text-2xl font-bold mb-4">Votre coffret</h1>
         <div class="w-full mb-8">
-            {% if cartService.cart() %}
+            {% set cart = cartService.getFormattedCart() %}
+            {% if cart %}
                 <ul class="space-y-4 px-8">
-                    {% set prestationsCount = {} %}
-                    {% for prestation in cartService.cart().prestations().get() %}
-                        {% set prestationsCount = prestationsCount|merge({(prestation.id): {"libelle": prestation.libelle, "quantite": (prestationsCount[prestation.id].quantite|default(0)) + prestation.pivot.quantite, "tarif": prestation.tarif, "img": prestation.img}}) %}
-                    {% endfor %}
-                    {% for id, details in prestationsCount %}
+                    {% for id, details in cart.prestations %}
                         <li class="flex items-center border-b pb-2">
                             <img src="/img/{{ details.img }}" alt="{{ details.libelle }}" class="w-12 h-12 object-cover rounded mr-4">
                             <div class="flex flex-col flex-grow">
                                 <span class="font-bold">{{ details.libelle }}</span>
                                 <span class="text-gray-600">Quantité : {{ details.quantite }}</span>
-                                <span class="text-gray-600">Prix : {{ details.tarif * details.quantite }}</span>
+                                <span class="text-gray-600">Prix : {{ details.total | number_format(2) }}</span>
                             </div>
-                            <!--TODO:  url_for('remove_prestation_from_box', {'box_id': box_id, 'presta_id': box_id }) }-->
-                            <a href="" class="ml-auto text-red-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </a>
+                            <form action="{{ url_for('remove_prestation_from_box', {'id': cartService.cart().id, 'prestationId': id }) }}" method="post" class="inline">
+                                <button type="submit" class="ml-auto text-red-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </form>
+
                         </li>
                     {% endfor %}
                 </ul>
+                <p class="text-gray-600">Total : {{ cart.totalPrice | number_format(2) }}</p>
             {% else %}
                 <p>Aucun coffret</p>
             {% endif %}
