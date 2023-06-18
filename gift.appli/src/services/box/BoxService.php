@@ -86,6 +86,25 @@ final class BoxService
         return $box;
     }
 
+    /**
+     * @throws PrestationNotFoundException
+     */
+    public static function payBox($boxId)
+    {
+        $box = self::getById($boxId);
+
+        if ($box === null) {
+            throw new Exception("Box not found.");
+        }
+
+        $box->paid = true;
+
+        $box->save();
+
+        return true;
+    }
+
+
     public function addService(string $serviceId, string $boxId, int $quantity): bool
     {
         var_dump($serviceId, $boxId, $quantity);

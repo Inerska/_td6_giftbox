@@ -16,7 +16,8 @@ CREATE TABLE `box` (
   `message_kdo` text NOT NULL DEFAULT '',
   `statut` int(11) NOT NULL DEFAULT 1,
   `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  `paid` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -17,6 +17,7 @@ use gift\app\actions\CartAction;
 use gift\app\actions\CategoriesAction;
 use gift\app\actions\CategoriesCreationAction;
 use gift\app\actions\CategoryByIdAction;
+use gift\app\actions\PayBoxAction;
 use gift\app\actions\PrestationAction;
 use gift\app\actions\PrestationsAction;
 use gift\app\actions\RemovePrestationFromBoxAction;
@@ -62,5 +63,8 @@ return function ($app) {
 
     $app->get('/cart', CartAction::class)
         ->setName('cart');
+
+    $app->post('/boxes/{id}/pay', PayBoxAction::class)
+        ->setName('payer');
 
 };
