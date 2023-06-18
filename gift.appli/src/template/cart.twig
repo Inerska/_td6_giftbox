@@ -14,7 +14,7 @@
                             <div class="flex flex-col flex-grow">
                                 <span class="font-bold">{{ details.libelle }}</span>
                                 <span class="text-gray-600">Quantité : {{ details.quantite }}</span>
-                                <span class="text-gray-600">Prix : {{ details.total | number_format(2) }}</span>
+                                <span class="text-gray-600">Prix : {{ details.total | number_format(2) }} €</span>
                             </div>
                             <form action="{{ url_for('remove_prestation_from_box', {'id': cartService.cart().id, 'prestationId': id }) }}" method="post" class="inline">
                                 <button type="submit" class="ml-auto text-red-500">
@@ -27,7 +27,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <p class="text-gray-600">Total : {{ cart.totalPrice | number_format(2) }}</p>
+                <p class="text-gray-600 text-xl font-weight-bold text-right pr-5">Total : {{ cart.totalPrice | number_format(2) }} €</p>
             {% else %}
                 <p>Aucun coffret</p>
             {% endif %}
