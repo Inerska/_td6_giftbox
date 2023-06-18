@@ -102,7 +102,19 @@ final class BoxService
 
         $box->save();
 
+        $_SESSION['box'] = $box;
+        $_SESSION['box']['paid'] = true;
+
         return true;
+    }
+
+    public static function isPaid(): bool
+    {
+        if (!isset($_SESSION['box'])) {
+            return false;
+        }
+
+        return $_SESSION['box']['paid'];
     }
 
     /**

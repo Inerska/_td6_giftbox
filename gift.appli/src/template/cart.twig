@@ -7,6 +7,9 @@
         <div class="w-full mb-8">
             {% set cart = cartService.getFormattedCart() %}
             {% if cart %}
+                {% if cartService.isPaid() %}
+                    <p class="text-green-600 text-xl font-weight-bold">Cette boîte est payée.</p>
+                {% else %}
                 <ul class="space-y-4 px-8">
                     {% for id, details in cart.prestations %}
                         <li class="flex items-center border-b pb-2">
@@ -37,6 +40,7 @@
                         Payer
                     </button>
                 </form>
+                    {% endif %}
             {% else %}
                 <p>Aucun coffret</p>
             {% endif %}
