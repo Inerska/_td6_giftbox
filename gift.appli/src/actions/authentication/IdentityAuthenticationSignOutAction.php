@@ -21,6 +21,6 @@ final class IdentityAuthenticationSignOutAction extends IdentityAction
 
         return $response
             ->withStatus(302)
-            ->withHeader('Location', '/authentication/signin');
+            ->withHeader('Location', '/auth/signin');
     }
 }
